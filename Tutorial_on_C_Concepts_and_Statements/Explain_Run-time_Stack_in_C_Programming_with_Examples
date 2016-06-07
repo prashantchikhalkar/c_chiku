@@ -1,0 +1,110 @@
+// http://www.sanfoundry.com/c-question-run-time-stack-usage/
+
+/*
+ This C Tutorial explains run time stack in C with examples.
+
+Lets dig deeper into details in order to unfurl the essentials of “Run-Time Stack” rather simply defining what Stack is and where is it used? Well! If we try to recollect ours’ memory during studying in college, we will find the concept of Stack we have had learnt about is somewhat similar to “every time a function is called, a Stack is created and used for temporary storage of variables local to function, arguments passed to function, return address etc. And when function exits, stack associated with it gets dismantled.” Of course, this is true! Yet, it’s incomplete!
+
+Let’s begin with ‘a.out’, a default object file for any C Program we compile on Linux or Unix System! This file can be in ELF (Executable and Linking Format), COFF (Common-Object File Format) or simply as ‘a.out’ format. Albeit these file formats are different but they have one thing in common ‘concept of Segment’! A segment is an area within binary file ‘a.out’ which contains information of a particular type, for example, entries in a ‘Symbol Table’. Every segment can have various sections. Sections are the smallest units of organisation in an ELF file. Every segment contains related stuff in binary!
+
+Let’s write a simple “hello world” program, compile it and run ‘size’ command on executable ‘a.out’ to see which different segments take up what amounts of space.
+
+#include <stdio.h>
+int main(void)
+{
+    printf("Hello World!\n");
+    return 0;
+}
+
+Output is put below:
+
+[sanfoundry]# gcc helloworld.c
+[sanfoundry]# size a.out
+   text    data     bss     dec     hex filename
+   1144     492      16    1652     674 a.out
+
+As is clear, text segment takes 1144 bytes, data segment takes 492 bytes bss segment takes 16 bytes! Interestingly, you can make experiment with above program by further including initialized or uninitialized global or static or local data and compile program and run ‘size’ command on it to ensure which types of statements end up in which segments! For example,
+
+#include <stdio.h>
+ 
+// Global and Static Initialized Data
+char fruit_tree[100] = {1};
+static int shots = 100;
+ 
+int main(void)
+{
+    printf("Hello World\n");
+    return 0;
+}
+
+Output is given below:
+
+[sanfoundry]# gcc helloworld.c
+[sanfoundry]# size a.out
+   text    data     bss     dec     hex filename
+   1143     624      16    1783     6f7 a.out
+
+Notice that text segment didn’t change while data segment changed corresponding to adding up of two global and static initialized instructions. Similarly, you can perform several more interesting tests to sure you about which statements in your C Program go into which different segments in executable!
+
+Below given is a figure showing instructions in a C program corresponding to which particular segments in ‘a.out’ file:
+
+Notice here that local variables declared in a function don’t go into ‘a.out’ file. Instead, they are created at run-time when program is executed. Also, observe here that uninitialized global and static data correspond to BSS segment. BSS is an abbreviation from ‘Block Started by Symbol’. Unlike the data segment, BSS segment doesn’t hold the image of uninitialized data instead it only records amount of desired space required at run-time. Text segment contains the executable instructions in your C program.
+
+So, guys, until now we have seen how instructions in a C program after having been compiled correspond to which different segments in the executable. As we know when a program is run it executes in it’s own address space allocated to it. This means that executable file has to be put into program’s address space for execution. But how does this happen? Who does this? Here, at this point, linker and loader come into picture! Indeed, they do this! Let’s see, how?
+
+Segments in ‘a.out’ file conveniently map into objects that the run-time linker can load directly! Loader just takes each segment image in the file and puts it directly into memory. The segments essentially become the memory areas of an executing program, each with a dedicated purpose.
+
+Below is a figure showing how Different Segments in ‘a.out’ file are Laid out in Memory.
+
+The text segment contains the program instructions. The loader copies that directly from the file into memory typically with ‘mmap()’ system call and never worries about it again because program text typically never changes in value nor size.
+
+Data segment contains initialized global and static variables, complete with their assigned values. The size of the BSS segment is then obtained from the executable, and the loader obtains block of this size, putting it right after the data segment. This block is zeroed out immediately as soon as it’s put in the program’s address space. The entire stretch of data and BSS segment is usually referred to jointly as the data segment at this point. This is because a segment, in the OS memory management terms, is simply a range of consecutive virtual addresses, so adjacent segments are coalesced. The data segment is typically the largest segment in any process!
+
+Now, it’s turn to consider storage for local variables, parameters passing in function calls, return addresses, temporaries etc. Therefore, we still need some memory space which is allocated as Stack segment! We may also need Heap space for dynamic memory allocation. This is set up as soon as first call to ‘malloc()’ is made.
+
+Notice in the fig-2 that lowest part of the address space isn’t mapped i.e. it’s within the range of the processes’ address space but has not been assigned to any physical address, so any reference to it will be illegal! This is typically a few K bytes of memory from address zero up. It catches references through null pointers, pointers which have small integer values etc.
+
+By this time, program is in memory and executing. Now, here let’s see how C organizes the data structures of a running program. There are several run-time data structures: Stack, Activation Records, Heap and so on. We’ll consider ‘Stack Segment’ here…
+
+The Stack Segment:
+
+The stack segment contains a single data structure, the stack. We are already familiar with the classic concept of how stack is implemented, if we recall, it’s implemented as LIFO, last-in-first-out queue. There are two different operations performed on the stack, viz. PUSH pushes an element onto top of stack while other POP removes an item from the top of stack. PUSH operation makes the stack grow larger.
+
+A function can access variables local to its calling function via parameters or global pointers. The run-time maintains a pointer, often in a register and usually called as SP (Stack Pointer) that indicates the current top of the stack. The stack segment has three major uses, two concerned with functions and the last one deals with expression evaluation.
+
+1. The stack provides storage for local variables declared inside the function. These variables are called ‘automatic variables’ in C Programming.
+
+2. The stack stores the “housekeeping” information involved when a function call is made. This housekeeping information is known as stack frame or, more generally, a procedure activation record. This includes the address from which the function was called (i.e. where to jump back to when the called function is finished execution), any parameters that won’t fit into registers, any saved values of registers.
+
+3. The stack also works as scratch-pad area… every time the program needs some temporary storage, perhaps to evaluate a lengthy arithmetic expression, it can push partial results onto the stack, popping them when needed.
+
+Remember that a stack would not be needed except for “Recursive Calls”. If not for these, a fixed amount of storage for local variables, parameters, return addresses etc. would be known at the compile time and could be allocated in the BSS segment. What do we mean by requiring the stack for Recursive Calls? Allowing recursive calls means we must find some way to allow multiple instances of local variables to be in existence at one time, though only the most recently created will be accessed.
+
+On most processors, stack grows downwards towards memory addresses with lower values. A function calls to itself recursively is a special case of a function calls another function; this function calls another function and so on. Let’s see what happens when a function gets called that is how does C run-time manages the program within its own address space.
+
+This is done via a service which is automatically provided and keeps track of call chain… which routines have called which others, and where control will pass back to, on the next “return” statement. The classic mechanism that takes care of this is called “procedure activation record” on the stack. There’s always a procedure activation record or something like this for each call statement executed. The procedure activation record is a data structure that supports an invocation of a procedure, and also records everything needed to get back to where you came from before the call.
+
+On x86 architecture, the frame is somewhat smaller. The runtime maintains a pointer, often in a register called FP (Frame Pointer) indicates the active stack frame. This will be the stack frame nearest to or at the top of stack.
+
+Of course, your concept of “run-time stack”, now, as I think, must not be vague any more! So, wouldn’t you like to trace the execution of “flow control” of a special case of function calling another function…, I mean, “recursive function” as a practice! For example:
+*/
+
+#include <stdio.h>
+
+int call_me (int);
+
+int main (void)
+{
+	int i = 10;
+	
+	printf ("%d\n", call_me (i));
+	return 0;
+}
+
+int call_me (int x)
+{
+	if (x == 1)
+		return x;
+	else
+		return call_me (x - 1);
+}
