@@ -1,0 +1,30 @@
+/*
+ This C Tutorial explains the difference between Macro and Const Declaration. Lets start with: what is/are the difference/s between the following two statements and which of these two is efficient and meaningful?
+
+#define SIZE 50
+int const size = 50;
+
+Answer:
+MACROS
+
+1. The statement “#define SIZE 50” is a preprocessor directive with SIZE defined as a MACRO. The advantage of declaring a MACRO in a program is to replace the MACRO name with the Value given to the MACRO in the #define statement wherever MACRO occurs in the program.
+
+2. No memory is allocated to the MACROS. Program is faster in Execution because of no trade-offs due to allocation of memory!
+
+3. Their Primary use in the program is where constant values viz. characters, integers, floating point is to be used. For example: as an array subscripts
+
+    #define MAX 50     /* Declaring a MACRO MAX */
+ 
+    /*
+     * MAX is a MACRO which is replaced with value 50 wherever
+     * occurs in the program
+     */
+ 
+    int roll_no[MAX];
+
+4. A MACRO Statement does not terminate with a semicolon ” ; ”
+CONSTANTS
+
+1. The statement “int const size = 50;” declares and defines size to be a constant integer with the value 50. The const keyword causes the identifier size to be allocated in the read-only memory. This means that the value of the identifier can not be changed by the executing program.
+MACROS are efficient than the const statements as they are not given any memory, being more Readable and Faster in execution! 
+*/
