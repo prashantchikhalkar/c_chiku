@@ -1,0 +1,29 @@
+/*
+What are Escape Sequences (Character Escapes) in C Language
+
+This C Tutorial explains Escape Sequences/Character Escapes and why they are needed.
+
+One or more characters following ‘\’ (the backslash) is considered to be a single character and is called the escape sequence. For example:
+
+\? used to write multiple question marks from being interpreted as trigraphs in printf() statements
+\” used to get the quotation marks inside the string literals
+\’ used to write a character literal for a character
+\\ used to write a backslash from being interpreted as a character escape
+\a \b etc.
+
+Escape sequences are used in a program to override the special meaning of characters in particular contexts! For example:
+*/
+
+// Sample Code : 
+
+#include <stdio.h>
+
+int main (void)
+{
+	printf ("What is your name? Are you \"CHIKU\"?");
+	
+	/*
+		What is your name? Are you "CHIKU"?
+		Note the name in output is enclosed in Quotation marks
+	*/
+}
