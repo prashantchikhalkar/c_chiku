@@ -1,0 +1,12 @@
+/*
+Question: What is the difference between declaration and definition of a variable?
+
+Answer: Declaration specifies the properties of a variable. For example:
+  
+  	int x;              // x is an integer
+    	int roll_no[];      // roll_no is an array of integers
+  
+Definition declares a variable and causes the storage to be allocated. For example:
+        int x = 10;         // x is declared as an integer and allocated space and initialized to 10
+    	int roll_no[100];   // roll_no is declared as an array of integers, allocated space for 100 integers
+*/
