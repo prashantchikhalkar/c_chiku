@@ -1,0 +1,57 @@
+/*
+ This C Tutorial explains different phases of Compilation of a C Program with examples.
+
+Compilers
+
+1. Compilers translate source files containing high level language statements like our C language program to object files containing machine instructions.
+2. As syntax of each high level language differs from one another,a separate compiler is needed for each high level language.
+3. The output of a compiler i.e. object file with machine instructions corresponds to a particular microprocessor.This implies that object file generated for ARM processor will not work for Intel Processor or some other one as instruction format differs from processor to processor.
+
+Compilation process is conversion of C source file to object file. Normally this translation takes place in four stages.
+
+1. Pre-processing
+2. Compilation
+3. Optimization
+4. Assembling
+Preprocessing
+
+Pre-processor is responsible for including all the include files into a C file, removing the comments, expanding all the macros and expanding inline functions. It also takes care of conditional compilation and as a include guard.
+
+Example of header file inclusion is like
+
+ #include<stdio.h>
+
+Example of removing the comments
+
+ /* This function is used to find area of the triangle */
+ 
+ Example of expanding macros
+
+#define NoOfRows 4
+
+Example of inline function
+
+inline int max(int a, int b) { return a > b ? a : b ; }
+
+Example of Conditional compilation
+
+# if 0
+some code 
+#endif
+
+Example of include guard
+
+#ifndef FILE_NAME
+#define FILE_NAME
+#endif
+
+Compilation
+
+The output of preprocessor is given to the compiler. Compiler will generate pseudo assembly language code which does not correspond to any microprocessor.
+Optimization
+
+The output of the compiler i.e. pseudo assembly language code is given to optimization process, which will optimize the code based on the registers of the microprocessor, and finally generates assembly language instructions for a particular microprocessor.
+Assembling
+
+The output of the optimization process i.e. assembly language code is given to the assembler and it converts to a object file which contains machine op-codes (Operation Codes) for the equivalent assembly instructions. 
+*/
