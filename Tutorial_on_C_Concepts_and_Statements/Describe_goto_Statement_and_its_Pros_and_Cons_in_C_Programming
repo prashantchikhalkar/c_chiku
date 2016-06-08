@@ -1,0 +1,131 @@
+/*
+ Question: What is a goto statement in C Programming Language? Specify Pros & Cons of goto statement.
+
+Answer:
+Syntax of goto
+
+    goto label-name;
+    - - -
+    - - -
+    - - -
+    label-name: statement;
+    
+    1. Both “goto label-name;” statement and its “label-name:” must be in the same function because outside the function goto does not work! However, these two can be used anywhere in the same function i.e. label-name can come either before or after the goto statement!
+
+2. A goto statement causes program control to jump to a statement bearing the indicated label. A colon is used to separate a labeled statement from its label. Label names follow the rules for variable names. For example:
+
+    top : ch = getchar();
+ 
+    .
+    .
+    .
+ 
+    if (ch != 'y')
+        goto top;
+
+2. By using gotos excessively, you create a labyrinth of program flow. If you aren’t familiar with gotos, keep it that way. If you are used to using them, try to train yourself not to. Ironically, C, which doesn’t need a goto, has a better goto than most languages because it enables you to use descriptive words for labels instead of numbers.
+
+#include <stdio.h>
+int display();
+ 
+int main(void)
+{
+    display();
+ 
+    return 0;
+}
+ 
+int display()
+{
+    int whattodo;
+ 
+    printf("user, enter 1 or 0\n");
+    scanf("%d", &whattodo);
+ 
+    if (whattodo == 1)
+        goto hello;
+ 
+    if (whattodo == 0)
+        printf("bye display() fun\n");
+    return 0;
+ 
+    hello : printf("HELLO\n");
+            goto bye;
+ 
+    bye : printf("BYE\n");
+ 
+    return 0;
+}
+
+3. There is one use of goto practiced by many C programmers—getting out of a nested set of loops if trouble shows up (a single break gets you out of the innermost loop only). For example:
+
+    while (funct > 0) {
+        for (i = 1; i <= 100; i++) {
+            for (j = 1; j <= 50; j++) {
+                 statements;
+                 if (bit trouble)
+                     goto help;
+                 statements;
+            }
+            more statements;
+        }
+        yet more statements;
+    }
+    and more statements;
+ 
+    help : out;
+
+Alternatives to goto
+
+As we have seen earlier, using gotos excessively causes program flow a labyrinth. We have two alternatives, one is we can set a flag & test the flag in every loop & the other is we put the set of nested loops in a separate function & use return; statement when some problem happens. For example:
+
+    /* 
+     * 1. status, an enumerated variable, can take values EXIT, OK 
+     * 2. EXIT, OK are symbolic names which are internally Integers
+     * 3. symbolic constants are assigned values as Integers from 0
+     *    to successive integers starting from left to right
+     */
+ 
+    enum { EXIT, OK } status;       
+ 
+    status = OK;
+    while (status == OK && condition1) {
+        while (status == OK && condition2) {
+            while (status == OK && condition3) {
+                if (some problem)
+                    status = EXIT;
+                break;
+            }
+        }
+    }
+
+Other way: using the return statement; in a function
+
+    loop_fun();
+ 
+    /* 
+     * 1. set of nested loops are put inside a separate function
+     * 2. when some problem happens, return; statement causes exiting
+     *    the function
+     */
+ 
+    int loop_fun()
+    {
+        while (condition1) {
+            while (condition2) {
+                while (condition3) {
+                    if (some problem)
+                        return 0;
+                }
+            }
+        }
+    }
+    
+    
+PROS and CONS of goto statement:
+
+1. This makes easy writing the programs.
+2. Excessive use of gotos causes program flow a labyrinth. Therefore, Programs with goto statements are DIFFICULT to understand and DIFFICULT to maintain.
+3. Try to avoid practicing goto statements. Use alternatives for goto statement. 
+
+*/
