@@ -1,0 +1,40 @@
+/*
+This C Tutorial explains Storage Class in C Language as well as their types. 
+It also explains the relationship with the scope of the variables/identifiers in the program with examples.
+
+Storage class of a variable refers to the type of memory allocated to a variable. For example
+
+int num = 10;    /* num, an integer is allocated the automatic memory */
+
+There are four types of storage classes viz. automatic, registers, static and global or extern.
+
+Variables which are declared inside the blocks, inside the curly braces {}, 
+are called the local variables and are given automatic storage. For example: 
+
+int index;                    
+    char colour;
+ 
+    /*
+     * index is an automatic variable, automatic keyword is not necessary.
+     * colour is also an automatic variable of type character, characters are internally INTEGERS
+     */
+     
+Register variables store values in the hardware registers. However they behave exactly as the automatic variables in that they are created and destroyed when the function is called & exited respectively. For example:
+
+    register int x = 10;
+
+When a variable is declared static, it is given memory allocation, at the compile time, in the static area before the program begins to execute and exists throughout the execution of the program. Also, static variables retain their last modified values. Variables declared outside of any blocks are allocated statically. When declared inside some function, exists during entire program for that particular function whenever called. Static variable is initialized to 0 by default! For example:
+
+     static int sum = 0;
+
+Global variables are declared outside of all functions. They are also allocated memory statically. Remain in existence during the entire execution of the program. Initialized to 0 by default. If they are to be accessed across other source files than the file in which they are defined, use extern keyword.
+
+Relation of Storage Class to Scope of the Variables
+
+Automatic and register variables have their life from the point of declaration till the end of the block in which they are declared!
+
+Static variables have their scope from the point of declaration till the end of the file! In cases, if defined inside a block, their access is within the block!
+
+Global variables can be accessed throughout the source file from their declaration and across other source files with extern keyword. 
+
+*/
