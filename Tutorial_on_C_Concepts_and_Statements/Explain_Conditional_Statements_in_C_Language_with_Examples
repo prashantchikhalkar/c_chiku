@@ -1,0 +1,326 @@
+/*
+ This C Tutorial explains various conditional statements in C Language with example usage.
+
+Answer: Conditional statements in C programming language are
+
+1. if statement
+2. if-else statement
+3. ternary statement or ternary operator
+4. nested if-else statement
+5. switch statement
+Usage
+
+Conditional statements cause variable flow of execution of the same program, each time the program is run, based on certain condition to be true or false! For example:
+if Statement: Syntax
+
+1. if condition is true, then single statement or multiple statements inside the curly braces executes, otherwise skipped and control is transferred to statement following the if clause
+
+2. conditional expression can be exploited to be any expression, function call, literal constant, string functions, MACROs which results in some numerical value
+
+3. numerical values other than zero is considered true while zero is false
+
+ 
+    /* single statement following the if clause */
+ 
+    if (condition) 
+        statement;    
+    statement;	  
+ 
+    /* block of statements following the if clause */
+ 
+    if (condition) {
+        statement;		
+        ----
+        statement;
+    }
+    statement;
+
+if-else Statement: Syntax
+
+ 
+    /*
+     * if condition is evaluated true, statement following if executes,
+     * otherwise else clause executes.
+     */
+ 
+    if (condition)        
+        statement;		 
+    else
+        statement;
+ 
+    /* control is passed here after if-else construct executed */
+ 
+    statements;
+
+Ternary Statement
+
+Ternary statement or Ternary operator is like if-else statement in its functioning. However, its syntax differs from if-else’s syntax. For example:
+
+ 
+    z = a > b ? a : b; 
+ 
+    /*
+     * 1. This is interpreted as: if a > b, then a is assigned
+     *    to z else b is assigned to z
+     * 2. operator ">" greater than, is a Relational Operator.
+     *    Other Relational Operators that can be used are
+     *    <, >=, <=, ==, !=
+     */
+     
+  Try out the following Examples & Observe their Outputs
+
+ 
+#include <stdio.h>
+int main(void)
+{
+    if (33444.5556656)       /* floating point constant */
+        printf("Inside if: floating point constant val but 0.0 is"
+               " treated as TRUE i.e NON-ZERO VALUE in if condition!!\n");
+    return 0;
+}
+
+ 
+#include <stdio.h>
+int main(void)
+{
+    float x = 00.556678;
+    int y;
+ 
+    /* floating point val x is explicitly promoted to integer */
+ 
+    if (y = (int)x)       
+        printf("Inside if: floating point val but 0.0 is treated"
+               " as TRUE i.e NON-ZERO VALUE in if condition!!\n");
+ 
+    printf("the values: x is %f and y is %d\n", x,y);
+    return 0;
+}
+
+ 
+#include <stdio.h>
+int main(void)
+{ 
+    if (;)
+        printf("Inside if: how does the semicolon or any other character"
+               " but digits as a condition in if statement treated? or"
+               " cause COMPILATION ERROR!\n");
+    return 0;
+}
+
+ 
+#include <stdio.h>
+ 
+/* function definition: function defined here */
+ 
+int hello(void)
+{
+    return 0;         
+}
+ 
+/* 
+* function prototype: return-type fun_name(arguments number & their type);
+*/
+ 
+void call_fun(void);
+ 
+int
+main(void)
+{
+    if (hello())
+        printf("function call as a condition in if statement returns"
+               " non-zero value!\n");
+    else
+        printf("hello() returns 0, so else executed!\n");
+ 
+    /*
+     * 1. Try yourself: Analyse output of the following if-else construct
+     * 2. Here, I called a function what(), whose return type is void,
+     *    as if condition
+     */
+ 
+    if (call_fun())
+        printf("function call possible as a condition in if statement!\n");
+    else
+        printf("call_fun() returns nothing because its return type is"
+               " void, so else executed!\n");
+ 
+    return 0;
+}
+void call_fun(void)
+{
+    printf("Inside call_fun() function!\n");
+}
+
+ 
+#include <stdio.h>
+int main()
+{
+    int number;
+    int *iptr;
+ 
+    /* 
+     * iptr, pointer to integer, follows the location of variable 
+     * number in the memory
+     */
+ 
+    iptr = &number;   
+ 
+    if (*iptr = 0)
+        printf("used pointer in the if condition! number is %d\n", *iptr);
+    else
+        printf("assigned number value 0 in the if condition using pointer"
+               " iptr, so else executed!\n");
+ 
+    return 0;
+}
+
+ 
+#include <stdio.h>
+int main()
+{
+    /*
+     * 1. printf() function prints hello
+     * 2. printf() function returns no of characters printed successfully
+     *    as integer, here 5
+     * 3. Conditional Expression in if evaluated to 5 which is TRUE
+     */
+ 
+    if (printf("hello\n"))
+        printf("printf prints hello and returns no of characters printed,"
+               " here 5\n");
+    else
+        printf("function call if returns 0 then else executed!\n");
+ 
+    return 0;	
+}
+
+ 
+#include <stdio.h>
+int main()
+{
+    /*
+     * 1. scanf() function stores input value at specified address
+     * 2. scanf() function returns no of successfully input values
+     *    as integer, here 1 
+     * 3. Conditional Expression in if evaluated to 1 which is TRUE
+     */
+ 
+    if (scanf("%d", &number)) 
+        printf("scanf() as a condition used in the if statement!\n");
+    else
+        printf("function call if returns 0 then else executed!\n");
+ 
+    return 0;
+}   
+
+ #include <stdio.h>
+#include <ctype.h>
+ 
+/* function prototype: function returns Integer */
+ 
+int recursive_display(int);     
+ 
+int main(void)
+{	
+    int char_dec_val,ret;
+ 
+    if (ret = recursive_display(char_dec_val = getchar()))
+        printf("\nrecursive fun. implemented successfully!\n");
+    else
+        printf("recursive fun. returns 0, so else executed!\n");
+ 
+    printf("recursive_display() returns %d\n", ret);
+    return 0;
+}
+int recursive_display(int counter)
+{	
+    if (counter == 1) {
+        printf("Recursion Count is %d\n", counter);
+        return 1;
+    }
+    else {
+        printf("Recursion Count is %d\n", counter--);
+        return recursive_display(counter);
+    }
+}
+
+ 
+    /*
+     * 1. Try to analyze the output of the following program
+     * 2. main() is called as conditional expression in if-else construct
+     */
+ 
+#include <stdio.h>
+int main(void)
+{
+    if (main())
+        printf("main() fun called!\n");
+    else
+        printf("else executed!\n");
+ 
+    return 0;
+}
+
+nested if-else Statement: Syntax
+
+ 
+    /*
+     * 1. nested if statements with single else clause
+     * 2. else clause associates with the inner most if 
+     *    statement which is incomplete
+     */
+ 
+    /* innermost if clause to which single else associates */		
+ 
+    if (condition1)							
+        if (condition2)
+            if (condition3)
+                 if (condition4)
+                    statements;
+    else
+        statements;          
+ 
+   /*
+    * Above, the else statement is associated with if (condition4)
+    */
+
+switch statement: Syntax
+
+1. expression in the switch must result in integer value.
+2. Maximum one of the label values match the expression value in order for the corresponding statements to execute. Otherwise default statement executes if present in the switch statement.
+3. break statement must be in the end in each case.
+4. break causes the execution to jump out of the switch to the statement immediately following the switch.
+5. break statement following the default clause is optional if default clause is placed as the LAST statement. However, break is must with default clause if the same is placed elsewhere within the switch!
+
+ 
+    switch (expression) {
+        case    label: statements;
+                       break;
+        case    label: statements;
+                       break;
+        case    label: statements;
+                       break;
+        case    label: statements;
+                       break;
+        default      : statements;
+                       break;
+    }
+
+Use of continue statement in switch
+
+1. switch statement is not a loop statement, therefore use of continue statement within the switch results compilation error!
+2. Actually continue statement in loop causes the iteration to go over again preventing the statements following the continue to execute. For Example:
+
+    /*
+     * 1. Use of continue in for loop
+     * 2. value of i is not displayed in the following for loop when 
+     *    i is 8 or 9 or 10 because of continue statement
+     */
+ 
+    for (i = 5; i <= 10; i++){
+        if (i == 8 || i == 9 || i == 10)
+            continue;
+        printf("i is %d	", i);        
+    }
+    
+*/
