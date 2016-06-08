@@ -1,0 +1,15 @@
+/*
+ Question: What is the output for the following code snippet? Will the program get compiled? If not, can you correct the condition in the if statement?
+
+    if (;)
+        printf("empty statement ; is considered true!");
+    else
+        printf("empty statement ; is considered false");
+
+Answer: COMPILATION ERROR! Well! if the empty statement ” ; ” in the if statement is placed in the character literals ‘ ‘, program will compile and run successfully to display the first massage. Reason is characters are INTEGERS INTERNALLY. ; has decimal value 59 in ASCII Character Set. So, the working code would be:
+
+    if (';')
+        printf("empty statement ; is considered true!");
+    else
+        printf("empty statement ; is considered false");
+*/
