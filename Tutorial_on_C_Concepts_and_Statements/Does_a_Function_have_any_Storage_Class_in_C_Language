@@ -1,0 +1,8 @@
+/*
+Question: Does a function have any storage class in C Language? In what type of memory does the program code store?
+
+Answer: Functions do not have any storage class. Actually, storage class is not an issue for the functions because Program Code is stored in the static memory. At run time, executable image (an ELF image on Linux) is loaded into the the physical memory area called the Process Address Space. Process Address Space comprises of three Segments viz. Text Segment, Stack Segment and Data Segment.
+
+Program code is stored in the Text Segment, automatic/local variables, function’s return addresses etc. in the Stack Segment and Data, initialized and uninitialized in the Data Segment.
+
+*/
