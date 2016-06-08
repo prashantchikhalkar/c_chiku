@@ -1,0 +1,46 @@
+/*
+ This C Tutorial explains the difference between do-while and while loops in C Programming.
+*/
+
+/*
+ In do-while loop, condition is always tested after the the execution of the iteration and if condition fails, loop terminates. 
+ Therefore, do-while loop executes at least one iteration before termination if condition fails in first iteration! 
+ For example:
+*/
+
+#include <stdio.h>
+ 
+int main(void)
+{
+    int counter = 0;
+ 
+    do {
+        /* loop executes just once printing the value 0 */
+ 
+        printf("counter is %d\n", counter);
+    } while(counter++ != 0);
+ 
+    return 0;
+}
+
+/*
+ In while loop, condition is checked before execution of each iteration and as condition fails, loop terminates. 
+ For example:
+*/
+
+#include <stdio.h>
+ 
+int main(void)
+{		
+    int counter = 0;
+ 
+    /* loop terminates in the beginning of first iteration */
+ 
+    while (counter++ != 0)
+        printf("counter is %d\n", counter);
+ 
+    /* here counter val is printed as 1 */
+ 
+    printf("counter is %d\n", counter);
+    return 0;      
+}
