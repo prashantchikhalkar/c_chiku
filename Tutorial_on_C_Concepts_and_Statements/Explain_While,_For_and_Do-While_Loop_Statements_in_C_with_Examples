@@ -1,0 +1,175 @@
+/*
+ This C Tutorial explains various loop statements in C with example usage.
+
+A loop statement is one which repeatedly executes, ensuring a given condition to be true prior to execution of each iteration, to perform some computations/work. As the condition turns false, loop terminates.
+
+In C programming Language, loops are while statement, for statement, do-while statement
+
+In while and for loops, conditional expression is tested a priory the execution of each iteration while in the do-while loop, condition is tested after execution of each iteration. This means in do-while loop, first iteration always executes even if condition happens to be false in first iteration!
+Syntax
+
+    /*
+     * In while, condition is tested in the beginning of each iteration
+     */    
+ 
+    while (condition) {                   
+        statements;                                   
+    }	                 				
+ 
+    for	(initialization; condition; adjustment) { 
+        statements; 						
+    }
+ 
+    /*
+     * In do-while: condition is tested in the end of each iteration
+     */
+ 
+    do {
+        statements;			 
+    } while(condition);
+
+Examples:
+while loop
+
+/* echo.c -- repeats input */
+ 
+#include <stdio.h>
+int main(void)
+{
+    int ch;
+ 
+    /*
+     * 1. getchar() function reads-in one character from the keyboard
+     *    at a time
+     * 2. return type of getchar() is int
+     * 3. getchar() returns integer value corresponding to char read
+     *    from the keyboard
+     */ 
+ 
+    /* 
+     * ch is checked if it is not same as '!', and as match occurs,
+     * loop terminates.
+     */
+ 
+    while ((ch = getchar()) != '!')
+        putchar(ch);
+    return 0;
+}
+
+for loop
+
+/* echo_eof.c --- repeating input to end-of-file */
+ 
+#include <stdio.h>
+int main(void)
+{
+    int ch;
+ 
+    /*
+     * EOF is a character defined, as a Macro, in the stdio.h header file
+     * EOF is a unique invisible character marks end of every file
+     * adjustment statement not required so left blank
+     */ 
+ 
+    for (ch = getchar(); ch != EOF; ) {
+        putchar();
+        ch = getchar();
+    }
+    return 0;
+}
+
+do-while loop
+
+/* echo.c -- repeats input */
+ 
+#include <stdio.h>
+int main(void)
+{
+    int ch;
+ 
+    /*
+     * 1. ch is checked if it is not same as '!', as match occurs,
+     *    loop terminates.
+     * 2. Even if the first character reads-in is '!', it is printed
+     *    on the screen & then loop terminates!
+     */     
+ 
+    do {
+        ch = getchar();
+        putchar(ch);
+    } while(ch != '!')   
+ 
+    return 0;
+}
+
+This is important to note that any Non-Zero value, integer, floating point values, as a condition is considered to be true while 0 is false! For examples:
+while loop
+
+/* echo.c -- repeats input Indefinitely */
+ 
+#include <stdio.h>
+int main(void)
+{
+    int ch;
+ 
+    /*
+     * 1. getchar() function reads-in one character from the keyboard
+     *    at a time
+     * 2. return type of getchar() is int
+     * 3. getchar() returns integer value corresponding to char read
+     *    from the keyboard
+     */ 
+ 
+    /* 
+     * Non-Zero value as a condition causes loop to Indefinitely
+     * Iterate Over.
+     * key-in ctrl+c on Linux to terminate the program.
+     */
+ 
+    while (500.345) {      
+            ch = getchar();
+            putchar(ch);
+    }
+ 
+    return 0;
+
+for loop
+
+/* echo_eof.c --- repeating input Indefinitely */
+ 
+#include <stdio.h>
+int main(void)
+{
+    int ch;
+ 
+    /*
+     * 1. initialization & adjustment statements not required so left blank
+     * 2. By default, initialization, conditional & adjustment statements,
+     *    all three are Optional. If not given, they are considered TRUE.
+     */
+ 
+    for ( ; 200 ; ) {     
+        putchar();
+        ch = getchar();
+    }
+    return 0;
+}
+
+do-while loop
+
+/* echo.c -- repeats input indefinitely */
+ 
+#include <stdio.h>
+int main(void)
+{
+    int ch;
+ 
+    do {
+        ch = getchar();
+        putchar(ch);
+    } while(1)   
+ 
+    return 0;
+}
+
+*/
