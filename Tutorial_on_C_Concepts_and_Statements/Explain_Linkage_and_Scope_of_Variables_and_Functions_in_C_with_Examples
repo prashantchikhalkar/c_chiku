@@ -1,0 +1,70 @@
+/*
+This C Tutorial explains Linkage/Scope of variables and functions in C with examples and defines the type of Linkages.
+
+Linkage of any variable and/or function defines the Area of the Program in which they are accessible.
+There are three types of Linkages for the variables & functions. These are as follows
+
+1. EXTERNAL
+2. INTERNAL
+3. NONE
+
+External linkage defines that the variable, function can be accessed throughout the program, 
+across the multiple source files if program comprises of several source files with the use of Keyword extern.
+
+#include <stdio.h>
+int counter;		    
+extern float marks;
+ 
+/*
+ * External linkage: counter is an integer accessible across entire program	
+ * External linkage: marks which is of float type defined in some other source file & used here
+ */
+ 
+void hello(void);
+int main()
+{
+    printf("the marks are %f\n", marks = 55.9);
+ 
+    return 0;
+}
+
+Static Keyword changes Linkage from External to Internal meaning that any variable, 
+function declared globally with static keyword can only be accessed within the source file 
+from the point of declaration until the end of the program in which it is declared.
+
+#include <stdio.h>
+ 
+/*
+ * Internal Linkage: counter can only be accessed within this source file from this point till the end of the file
+ * Internal Linkage: function hello can only be accessed within this source file
+ */
+ 
+static int counter; 			
+static void hello(void); 		 
+ 
+int main(void)
+{
+    hello();
+}
+
+Automatic and register variables neither have external nor internal linkages.
+They are accessed only within the blocks in which they are declared. For example:
+
+#include <stdio.h>
+void hello(void);
+int main(void)
+{
+    hello();
+ 
+    return 0;
+}
+ 
+void hello()
+{
+    int counter = 1;  /* counter is an automatic variable i.e. ONLY accessible within this block! */
+ 
+    printf("the value of counter is %d\n",counter);
+}
+
+
+*/
