@@ -1,0 +1,116 @@
+/*
+ This C Tutorial explains the differences between the while and for loop in C.
+
+Basically, there are two major differences between these two loops.
+
+1. In for loop, initialization, condition and adjustment statements are all put together in one line which make loop easier to understand and implement. While in the while loop, initialization is done prior to the beginning of the loop. Conditional statement is always put at the start of the loop. While adjustment can be either combined with condition or embedded into the body of the loop. For example:
+
+    /*
+     * for loop
+     */
+ 
+    for (initialization; condition; adjustment) {
+ 
+    }
+ 
+    /*
+     * while loop
+     */
+ 
+    initialization;
+    while (condition) {
+        statements;
+        adjustment;
+    }
+
+Example:
+
+#include <stdio.h>
+ 
+int main(void)
+{
+    int count;
+ 
+    count = 0;
+ 
+    /*
+     * adjustment is put together with condition
+     */
+ 
+    while (count < 10 && (count += 1))
+        printf("count is %d\n", count);
+ 
+    return 0;
+}
+
+2. When using “continue;” statement in for loop, control transfers to adjustment statement while in while loop control transfers to the condition statement. For example:
+
+  
+    for	(initialization; condition; adjustment) {
+        statements;
+        continue;
+        - - - -;
+        statements;
+    }
+		
+    initialization;
+    while (condition) {
+        statements;
+        continue;
+        adjustment;
+    }   
+
+Examples:
+
+int main(void)
+{
+    int count;
+ 
+    count = 0;
+ 
+    /*
+     * 1. adjustment is with the condition
+     * 2. continue; statement transfers control to the
+     *    "condition + adjustment" in the first line
+     * 3. continue; statement like break; statement should
+     *    be put under decision-control statements
+     * 4. observe the output of the program
+     */
+ 
+    while (count < 10 && (count += 1)) {
+        if (count <= 5)
+            continue;
+ 
+        printf("count is %d\n", count);
+    }
+    return 0;
+}
+
+int main(void)
+{
+    int count;
+ 
+    /*
+     * 1. adjustment is embedded into the body of the loop
+     * 2. continue; statement transfers control to the "condition and not
+     *    to the adjustment" in the first line
+     * 3. continue; statement like break; statement should be put under
+     *    decision-control statements
+     * 4. observe the output of the program, how it differs from the previous example
+     */
+ 
+    count = 0;
+    while (count < 10)) {
+        count += 1;
+        if (count <= 5)
+            continue;
+ 
+        printf("count is %d\n", count);
+    }
+    return 0;
+}
+
+1. continue; statement is only used in loops.
+2. This is to note that “continue;” statement if used in loops causes the loop to iterate over again preventing the normal execution after the continue statement. 
+
+*/
