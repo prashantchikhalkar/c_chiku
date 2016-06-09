@@ -1,0 +1,100 @@
+#if 0
+Question: Differentiate between a C Expression and a C Statement.
+
+Answer: 
+Every C program comprises of Statements. 
+Program executes statement by statement. 
+Each statement generally, in turn, comprises of some expression. 
+And an expression may further comprise of sub-expressions.
+
+For example:
+
+#endif
+
+/* diff_statements.c */
+#include <stdio.h>
+#define SIZE 10        /* SIZE symbolic constant */ 
+ 
+int main(void)
+{
+    int index, sum;    /* declaration statement */
+    int boys[SIZE];    /* array declaration */
+ 
+    printf("user enter no of boys in 10 classes...\n");
+    /* function statement */
+ 
+    for (index = 0; index < SIZE; index++) 
+        scanf("%d", &boys[index]);
+ 
+    /* for statement with single statement */ 
+ 
+    /* IT'S A GOOD PRACTICE TO REVIEW IF U ENTERED CORRECT VALUES */
+ 
+    printf("No. of boys you entered for 10 classes are as:\n");
+    for (index = 0; index < SIZE; index++)
+        printf("%d\t", boys[index]);
+    printf("\n");
+ 
+    printf("Summing up & Displaying boys in all classes...\n");
+ 
+    /* for statement with block of statements */     
+    for (index = 0; index < SIZE; index++) {
+        sum += boys[index];
+        ;   /* Null Statement; this does nothing here */
+    }
+ 
+    printf("Total boys in %d classes is %d\n", SIZE, sum);
+    return 0;
+}
+
+#if 0
+Every C statement ends with a semicolon ‘;’. While expressions don’t.
+For example:
+
+x + y;    /* x + y is an exp but x + y; is a statement. */
+    5 + 7;    /* similarly as above */
+ 
+    while (5 < 10) {  
+        /* 5 < 10 is a relational exp, not a statement. */
+        /* used as a while test condition */
+ 
+        /* other statements in while loop */
+    }
+ 
+    result = (float) (x * y) / (u + v); 
+    okey = (x * y) / (u + w) * (z = a + b + c + d);
+ 
+    /* (z = a + b + c + d) is a sub-expression in the above */
+    /* expression. */
+    
+Remember, if we remove the semicolon ‘;’ from a statement, It’ll not always be some expression. For example:
+
+    int man; /* declaration statement */
+    int man  /* removed the semicolon */
+ 
+    /* But man isn't an expression because exp don't have types */  
+    /* associated with them. */
+
+Keep in mind that all Loops, Branching or Selection expressions are single statements. Each of this begins from its Keyword continues till first semicolon is found or until closing brace of the following compound/block statement. For example:
+
+    for (index = 0; index < SIZE; index++)
+        printf("read in next value.\n");    /* for ends here */
+ 
+    for (index = 0; index < SIZE; index++) {
+        printf("read in next value\n");
+        scanf("&d", &boys[index]);
+    }    /* for statement with compound statement */
+ 
+    if (celcius == farenheit)
+        printf("display the temperature.");
+        /* if ends with a semicolon */
+ 
+    if (celcius == farenheit) {
+        printf("fine!\n");
+        printf("let's check some other temperature\n");
+    }    /* if ends with closing brace of compound statement */
+    
+Because they owe Special Structures, Loops & Branching or Selection statements are also referred to as Structured Statements.
+
+#endif
+
