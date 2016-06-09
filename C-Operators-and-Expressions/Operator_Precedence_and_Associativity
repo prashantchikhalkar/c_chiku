@@ -1,0 +1,122 @@
+#if 0
+This C Tutorial Explains Operator Precedence and its Associativity in C Programming.
+
+A meaningful Expression in C is a combination of Operators and Operands. An operator performs a fixed, predefined action on its two operands if it’s a Binary Operator or operates on its single operand if it’s a Unary Operator. Most of the operators in C are Binary Operators. For example:
+
+    int x, y;
+    int sum;
+    50L;     /* such exp. is doing nothing, so of no use */
+ 
+    printf("Read in two integer numbers for their sum...\n");
+    scanf("%d %d", &x, &y);
+ 
+    sum = x + y; 
+ 
+    /*
+     * Plus '+' adds y to x
+     * Assignment operator '=' then assigns result to sum
+     */
+ 
+    /*
+     * Notice in the above exp. sum = x + y; there are two operators
+     * '=' and '+'. How do we decide which of two operators to be 
+     * evaluated first? There are Certain Rules C language determines 
+     * for the correct evaluation of expressions so programs are 
+     * portable across different platforms.
+     */
+
+Rules of operator precedence help determine how terms are grouped when expressions are evaluated. When two operators share an operand, the one of higher precedence is applied first. If the operators have equal precedence, the associativity (left-right or right-left) determines which operator is applied first. Besides, Rules of Type Conversions, when an expression comprises of several different types of values/variables, must also be accounted for the correct evaluation of the expression.
+
+Rules of Type Conversions
+
+Statements and expressions should normally use variables and constants of just one type. If, however, we mix types, C doesn’t stop us from doing so. Instead, it uses a set of rules to make type conversions automatically. This can be a convenience, but it can also be a danger, especially if you are mixing types inadvertently.
+
+The basic rules are
+
+When appearing in an expression, char and short, both signed and unsigned, are automatically converted to int or, if necessary, to unsigned int. (If short is the same size as int, unsigned short is larger than int; in that case, unsigned short is converted to unsigned int.) Because this involves conversion to higher types, these are called Promotions.
+
+In any operation involving two types, both values are converted to the higher ranking of the two types.
+
+The ranking of types, from highest to lowest, is:
+
+long double, double, float, unsigned long long, long long, unsigned long, long, unsigned int, and int.
+
+One possible exception is when long and int are the same size, in which case unsigned int outranks long. The short and char types don’t appear in this list because they would have been already promoted to int or perhaps unsigned int.
+
+In an assignment statement, the final result of the calculations is converted to the type of the variable being assigned a value. This process can result in promotion, as described in rule 1, or demotion, in which a value is converted to a lower-ranking type.
+
+When passed as function arguments, char and short are converted to int, and float is converted to double. This automatic promotion can be overridden by function prototyping.
+
+Promotion is usually a smooth, uneventful process, but demotion can lead to real trouble. The reason is simple: The lower-ranking type may not be big enough to hold the complete number. An 8-bit char variable can hold the integer 100 but not the integer 1000000. When floating types are demoted to integer types, they are truncated, or rounded toward zero. That means 23.01 and 23.99 both are truncated to 23 and that -23.6 is truncated to -23 which causes Loss of Information. For example:
+
+/* convert.c -- automatic type conversions */
+#include <stdio.h>
+int main(void)
+{
+    char ch;
+    int i;
+    float fl;
+ 
+    fl = i = ch = 'C';
+ 
+    /*
+     * character ch is promoted to signed integer when assigned to integer i
+     * integer i then promoted to float when assigned to type float value fl
+     */
+ 
+     printf("ch = %c, i = %d, fl = %2.2f\n", ch, i, fl);
+ 
+     ch = ch + 1;
+     /*
+      * ch is character & 1 is signed integer therefore, character ch is 
+      * promoted to signed integer first, computes sum then while assigning 
+      * sum, this is demoted to character because value to the left of 
+      * assignment is of type char
+      */ 
+ 
+     i = fl + 2 * ch;
+     /*
+      * firstly multiplication is performed because of higher precedence so
+      * ch is promoted to integer then result of multiplication is promoted
+      * to float to be summed to value fl of type float final result is 
+      * demoted to integer to be assigned to variable i of type int 
+      */
+ 
+      fl = 2.0 * ch + i;
+ 
+      printf("ch = %c, i = %d, fl = %2.2f\n", ch, i, fl);
+ 
+      ch = 5212205.17; 
+      /* 8-bit char can't occupy such big value */
+ 
+      printf("Now ch = %c\n", ch); /* some unexpected result */
+      return 0;
+}
+
+Table of C Operators with their Precedence & Associativity
+
+Operators (from High to Low Precedence)		    Associativity
+ 
+++ (postfix) -- (postfix) ( ) (function call)
+[ ] {} (compound literal)                               L–R    
+ 
+++ (prefix) -- (prefix) - + ~ ! sizeof 
+* (dereference) & (address) (type) (all unary)          R-L
+ 
+(type name)                                             R-L
+* / %                                                   L-R
++ - (both binary)                                       L-R
+<< >>                                                   L-R
+< > <= >=                                               L-R
+== !=                                                   L-R
+&                                                       L-R
+^                                                       L-R
+|                                                       L-R
+&&                                                      L-R
+||                                                      L-R
+? : (conditional expression)                            R-L
+= *= /= %= += -= <<= >>= &= |= ^=                       R-L
+, (comma operator)                                      L-R
+
+
+#endif
