@@ -1,0 +1,88 @@
+#if 0
+This C Tutorial Explains C Expression.
+
+A C expression is any combination of operators and operands. For example:
+
+    50;	                         /* an integer constant */	
+    543.0009;                    /* a real constant */
+    x + y;                       /* sum y to x */         
+    hall >= room;                /* a relational exp */ 
+    value = a * b / (c * d + a)  /* an arithmetic exp */
+
+An operator is what something that performs some predefined action on operand/ operands and an operand is some variable, sub-expression or some value. For example:
+
+    x + y;
+    /* plus '+' is a binary operator operates on two operands x and y and */
+    /* computes their sum */
+
+Every C expression has a Numeric value. There are certain Rules regarding the evaluation of expressions. The Operator Precedence & its Associativity determine in which order & which operators to be evaluated first, next and so on in a given expression. For example:
+
+    x = 20;
+    /* assignment operator '=' assigns value to right of this to the */
+    /* variable left of this. result of exp x = 20; is 20 */
+ 
+    y = 20; 
+    z = x + y;  /* z gets value 40 */
+    x + y;      /* this expression results 40 */
+    x > y;      /* relational expression results 0 here */
+    
+    Relational Expressions, Logical Expressions have values either True or False that is 1 or 0. C99 standard provides a new type _Bool which allows only two values 0 & 1 for false & true.
+
+A C program comprises of Statements each of which, mostly, in turn comprises of expressions. For example:
+
+#endif
+
+#include <stdio.h>
+
+#define R2Y	1.59		// Rupee to Yen
+#define Y2R	0.63		// Yen to Rupee
+
+int main (void)
+{
+	int choice;
+	
+	float yens, rupees;
+	
+	printf ("Enter your choice\n");
+	printf ("1 - Convert Yen to Rupee\n");
+	printf ("2 - Convert Rupee to Yen\n");
+	printf ("0 - Quit\n");
+	
+	while (scanf ("%d", &choice) == 1) {
+		if (choice == 1) {
+			printf ("Enter how many Yen you wanna convert to Rupee?\n");
+			scanf ("%f", &yens);
+			
+			printf ("%.2f YEN is equal to %.6f RUPEE\n", yens, yens * Y2R);
+		}
+		else if (choice == 2) {
+			printf ("Enter how many Rupee you wanna convert to Yen?\n");
+			scanf ("%f", &rupees);
+			
+			printf ("%.2f Rupee is equal to %.6f Yen\n", rupees, rupees * R2Y);
+		}
+		else	{
+			printf ("Thank You\n");
+			exit (0);
+		}
+	}
+	return 0;
+}
+
+/*
+In the above program, we used return value of scanf() fun to terminate the loop. 
+When we enter q to quit, scanf() failed to read & returns 0 and therefore loop terminates.
+*/
+
+#if 0
+A C expression may also contain sub expression. For example:
+
+    x + y * (a = b / c);    /* (a = b / c) is a sub-exp */ 
+ 
+/* In the above exp., sub-exp is evaluated first because parentheses have */
+/* higher precedence. */
+/* The result of sub-exp is value of the variable to the left side of the */
+/* assignment operator.*/
+/* result is then multiplied to the value of y. Then the product is added */
+/* to x */
+#endif
