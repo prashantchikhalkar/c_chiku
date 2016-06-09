@@ -1,0 +1,116 @@
+#if 0
+This C Tutorial Explains Different Assignment Operators in C with Examples.
+
+The basic assignment operator in C Programming Language is ‘=’, which we know as “equal to” in Mathematics. However, in C this is not to be confused with “equal to” but this performs different operation on its operands. This operator assigns value of expression/variable/constant at its right to the variable at its left. Every expression in C evaluates to some value. For example: Valid assignment statements.
+
+    result = (x * y) / (u + v); 
+    value = x + y;
+    more = ++yes;
+    int const TRUE = 1;
+    int const FALSE = 0;
+ 
+    /* 
+     * In C, variable names should be in lower case. However, Constants
+     * are named in Capitals. Above, TRUE and FALSE are constants.
+     */
+
+The right side value of the assignment is called rvalue and left side of the assignment is called lvalue or modifiable lvalue. lvalue refers to memory location or region of actual data storage or data object to hold value into while rvalue refers to value of some expression or variable or constant which is to be assigned to lvalue. Not all data objects can have their values changed therefore data objects that can change values are called modifiable lvalues. lvalue can not be a constant. For example:
+
+    56 = x + y + z;
+    /* 
+     * since lvalue must be a location to hold value into it. 56 is not a
+     * location, instead this is a value. Not a valid assignment statement
+     */
+
+Another example:
+
+    /* assignment.c -- program displays use of assignment operator */
+
+    #include <stdio.h>
+
+    int main(void)
+
+    {
+
+        int one, two, three;
+
+        one = two = three = 68; 
+
+     
+
+        /* one, two and three, each assigned 68 */
+
+        /* associativity of assignment operator is from right to left */
+
+     
+
+        printf("                   one  two   three");
+
+        printf("First round score %4d %8d %8d\n", one, two, three);
+
+     
+
+        return 0;
+
+    }
+
+Operator Precedence
+Consider the following line of code:
+
+    result = 19.0 + 20.0 * n / SCALE;
+
+This statement has an addition, a multiplication, and a division operation. Which operation takes place first? Is 20.0 added to 19.0, the result of 39.0 then multiplied by n, and that result then divided by SCALE? Is 20.0 multiplied by n, the result added to 19.0, and that answer then divided by SCALE? Is it some other order? Let’s take n to be 6.0 and SCALE to be 2.0. If you work through the statement using these values, you will find that the first approach yields a value of 117.0. The second approach yields 69.5. A C program must have some other order in mind, because it would give a value of 79.0 for result.
+
+Clearly, the order of executing the various operations can make a difference, so C needs unambiguous rules for choosing what to do first. C does this by setting up an operator precedence order. Each operator is assigned a precedence level. As in ordinary arithmetic, multiplication and division have a higher precedence than addition and subtraction, so they are performed first. What if two operators have the same precedence? If they share an operand, they are executed according to the order in which they occur in the statement. For most operators, the order is from left to right. (The = operator was an exception to this.) Therefore, in the statement
+
+    result = 19.0 + 20.0 * n / SCALE;
+
+The order of operations is as follows:
+
+20.0 * n
+
+The first * or / in the expression (assuming n is 6 so that 20.0 * n is 120.0)
+
+120.0 / SCALE
+
+Then the second * or / in the expression
+
+19.0 + 60
+
+Finally (because SCALE is 2.0), the first + or – in the expression, to yield 79.0
+
+Operators in Order of Decreasing Precedence
+
+  Operators                          Associativity
+ 
+    ()                                Left to right
+    + - (unary)                       Right to left
+    * /                               Left to right
+    + - (binary)                      Left to right
+    =                                 Right to left
+    
+    More Assignment Operators: +=, -=, *=, /=, %=
+
+C has several assignment operators. The most basic one, of course, is =, which simply assigns the value of the expression at its right to the variable at its left. The other assignment operators update variables. Each is used with a variable name to its left and an expression to its right. The variable is assigned a new value equal to its old value adjusted by the value of the expression at the right. The exact adjustment depends on the operator. For example,
+
+        scores += 20; is the same as scores = scores + 20;
+
+        dimes -= 2; is the same as dimes = dimes - 2;
+
+        bunnies *= 2; is the same as bunnies = bunnies * 2;
+
+        time /= 2.73; is the same as time = time / 2.73;
+
+        reduce %= 3; is the same as reduce = reduce % 3;
+
+Well! The preceding list uses simple numbers on the right, but these operators also work with more elaborate expressions, such as the following:
+
+    x *= 3 * y + 12;
+    x = x * (3 * y + 12); /* both statements are same */
+
+The assignment operators we’ve just discussed have the same low priority that = does—that is, less than that of + or *. This low priority is reflected in the last example in which 12 is added to 3 * y before the result is multiplied by x.
+
+You are not required to use these forms. They are, however, more compact, and they may produce more efficient machine code than the longer form. The combination assignment operators are particularly useful when you are trying to squeeze something complex into a for loop specification. 
+
+
+#endif
