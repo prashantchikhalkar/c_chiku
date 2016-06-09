@@ -1,0 +1,138 @@
+#if 0
+This C Tutorial Explains Operator & Various Types of Operators in C Language.
+
+An Operator is something that performs some fixed, predefined action on its operands. For example:
+
+    15 + 34; /* '+' operator adds 34 to 15 */
+    x * y;   /* '*' multiplication operator here */
+    -x;      /* '-' minus operator changes the sign of its operand */
+    ++y;     /* increment operator */
+
+C offers huge set of operators comparative to other programming languages especially to meet every possible programming need. There are some 40 different types of operators in C. Further, these operators depending upon their actions on the number of operands at a time are categorized as Unary Operators which have one operand, Binary Operators which have two operands and Ternary Operators which takes three operands. For example:
+
+/* diff_operators.c: Program displays some common c operators */
+#include <stdio.h>
+int main(void)
+{
+    int num1, num2;
+    int sum;
+ 
+    num1 = num2 = 10;  /* num1 & num2 both r 10 */
+ 
+    /* '=' assignment operator assigns value of exp/variable at its right */
+    /* to var at its left. '=' operator associates from right to left */
+ 
+    sum = num1 + num2;
+ 
+    /* Plus '+' is a binary operator. It adds value of num2 to num1. */
+     * Result is assigned to sum by the assignment operator. */
+ 
+    -num1; 
+ 
+    /* Minus '-' is here a Unary Operator. */
+    /* It changes sign of its operand. num1 is now -10. */
+ 
+    --num1;
+ 
+    /* '--' is a unary operator called decrement operator. */
+    /* comes in two versions: prefix & postfix. */
+    /* it reduces its operand value by 1. num1 now became -11. */
+ 
+    return 0;
+}
+
+Various C Operators & their Meaning:
+
+Arithmetic Operators
+
++ adds the value at its right to the value at its left.
++, as a unary operator, produces a value equal in magnitude (and of the same sign) to the operand to the right.
+
+– subtracts the value at its right from the value at its left.
+–, as a unary operator, produces a value equal in magnitude (but opposite in sign) to the operand to the right.
+
+* multiplies the value at its right by the value at its left.
+/ divides the value at its left by the value at its right. The answer is truncated if both operands are integers.
+% yields the remainder when the value at its left is divided by the value to its right (integers only).
+
+++ adds 1 to the value of the variable to its right (prefix mode) or adds 1 to the value of the variable to its left (postfix mode).
+
+— is like ++, but subtracts 1.
+
+Relational Operators
+
+Each of the following operators compares the value at its left to the value at its right:
+
+    <	Less than
+    <=	Less than or equal to
+    ==	Equal to
+    >=	Greater than or equal to
+    >	Greater than
+    !=	Unequal to
+    
+Assignment Operators
+
+C has one basic assignment operator and several combination/arithmetic assignment operators. The = operator is the basic form.
+
+= assigns the value at its right to the lvalue on its left. lvalue is modifiable value. lvalue or modifiable lvalue refers to some location in the memory into which to hold some value.
+
+Each of the following assignment operators updates the lvalue at its left by the value at its right, using the indicated operation (we use R–H for right-hand and L–H for left-hand):
+
++= adds the R–H quantity to the L–H variable and places the result in the L–H variable.
+-= subtracts the R–H quantity from the L–H variable and places the result in the L–H variable.
+
+*= multiplies the L–H variable by the R–H quantity and places the result in the L–H variable.
+/= divides the L–H variable by the R–H quantity and places the result in the L–H variable.
+%= gives the remainder from dividing the L–H quantity by the R–H quantity and places the result in the L–H variable.
+
+&= assigns bitwise & of L–H and R–H to the L–H quantity/l-H variable.
+|= assigns bitwise | of L–H and R–H to the L–H quantity/L–H variable.
+^= assigns bitwise ^ of L–H and R–H to the L–H quantity/L–H variable.
+
+>>= assigns L–H >> R–H to the L–H quantity and places the result in the L–H variable.
+<<= assigns L–H << R–H to the L–H quantity and places the result in the L–H variable. Logical Operators
+
+There are three Logical Operators in C. They normally take relational expressions as operands. The ! operator takes one operand. The rest take two: one to the left, and one to the right.
+
+    &&	  AND
+    ||	  OR
+    !	  NOT
+
+The Conditional Operator/Ternary Operator
+
+? : takes three operands, each of which is an expression. They are arranged this way:
+
+expression1 ? expression2 : expression3
+
+The value of the whole expression equals the value of expression2 if expression1 is true, and equals the value of expression3 otherwise.
+
+Pointer-Related Operators
+
+& is the address operator. When followed by a variable name, & gives the address of that variable.
+* is the indirection or dereferencing operator. When followed by a pointer, * gives the value stored at the pointed-to address.
+
+Sign Operators
+
+– is the minus sign and reverses the sign of the operand.
++ is the plus sign and leaves the sign unchanged.
+
+All the following bitwise operators, except ~, are binary operators:
+
+Bitwise Operators
+
+~ is the unary operator and produces a value with each bit of the operand inverted.
+& is AND and produces a value in which each bit is set to 1 only if both corresponding bits in the two operands are 1.
+| is OR and produces a value in which each bit is set to 1 if either, or both, corresponding bits of the two operands are 1.
+^ is EXCLUSIVE OR and produces a value in which each bit is set to 1 only if one or the other (but not both) of the corresponding bits of the two operands is 1.
+<< is left-shift and produces a value obtained by shifting the bits of the left-hand operand to the left by the number of places given by the right-hand operand. Vacated slots are filled with zeros. >> is right-shift and produces a value obtained by shifting the bits of the left-hand operand to the right by the number of places given by the right-hand operand. For unsigned integers, the vacated slots are filled with zeros. The behaviour for signed values is implementation dependent.
+
+Miscellaneous Operators
+
+sizeof yields the size, in units the size of a char value, of the operand to its right. Typically, a char value is 1 byte in size. The operand can be a type-specifier in parentheses, as in sizeof (float), or it can be the name of a particular variable, array, or so on, as in sizeof boys. A sizeof expression returns value of type size_t.
+
+(type) is the cast operator and converts the value that follows it to the type specified by the enclosed keyword(s). For example, (float) 9 converts the integer 9 to the floating-point number 9.0.
+
+, is the comma operator; it links two or more expressions into one and guarantees that the leftmost expression is evaluated first. The value of the whole expression is the value of the right-most expression. This operator is typically used to include more information in a for loop, while loop control expression. 
+
+
+#endif
