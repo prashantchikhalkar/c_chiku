@@ -1,0 +1,143 @@
+#if 0
+This C Tutorial Explains Various Arithmetic Operators in C Language with examples.
+
+We have following arithmetic operators:
+
++ (addition), – (subtraction), * (multiplication), / (division) and % (modulus/remainder)
+
+All Arithmetic Operators are binary operators i.e. each operates on two operands. We take one by one to understand them.
+
+Addition Operator: +
+
+The addition operator causes the two values flanking on either side of it to be added together. For example:
+
+    printf("%d", 5 + 20); 
+ 
+    /* printf() statement causes 25 to be printed & not the exp. 5 + 20 */
+
+The operands to be added can be variables, constants or other expressions or sub-expression as well. For Example:
+
+    income = salary + bribes; 
+ 
+    /*
+     * statement causes the computer to look up the values of the two 
+     * variables on the right, add them up, and then assign this total 
+     * to the variable income.
+     */
+
+Subtraction Operator: –
+
+The subtraction operator causes the number after the – sign to be subtracted from the number before the sign. For Example:
+
+    takehome = 200.00 – 100.00; 
+ 
+    /* The statement assigns the value 100.00 to takehome. */
+
+Sign Operators: – and +
+
+The minus sign can also be used to indicate or to change the algebraic sign of a value. For instance:
+
+    rocky = –12;        /* assigns -12 to rocky */
+    smokey = –rocky;    /* gives smokey the value 12 */
+
+When the minus sign is used in this way, it is called a unary operator, meaning that it takes just one operand. The C90 standard adds a unary + operator to C. It doesn’t alter the value or sign of its operand; it just enables us to use statements, for example, like,
+
+count = +12;
+
+without getting a compiler complaint.
+
+Multiplication Operator: *
+
+Multiplication is indicated by the * symbol. For example:
+
+    cm = 2.54 * inch; 
+    /* statement multiplies variable inch by 2.54 & assigns product to cm */
+
+Well! If you want a table of squares? C doesn’t have a squaring function, but, we can use multiplication to calculate squares. For example:
+
+/* squares.c -- produces a table of first 25 squares */
+#include <stdio.h>
+int main(void)
+{
+    int num = 1;
+ 
+    while (num <= 25) {
+        printf("%4d %6d\n", num, num * num);
+        num = num + 1;
+    }
+    return 0;
+}
+
+Division Operator: /
+
+C uses the / symbol to represent division. The value to the left of the / is divided by the value to the right. For example,
+
+    val = 15 / 3;
+ 
+    /* statement gives variable val the value of 5 */
+
+Division works differently for integer types than it does for floating types. Floating-type division gives a floating-point answer, but integer division yields an integer answer. An integer can’t have a fractional part, which makes dividing 10 by 3 awkward, because the answer does have a fractional part. In C, any fraction resulting from integer division is discarded. This process is called truncation.
+
+We consider an example to see how truncation works and how integer division differs from floating-point division. For example,
+
+/* division.c -- integer, floating-pt and mix divisions */
+#include <stdio.h>
+int main(void)
+{
+    printf("integer division:  10 / 4   is %d \n", 10 / 4);
+    printf("integer division:  12 / 3   is %d \n", 12 / 3);
+    printf("integer division:  9 / 4   is %d \n", 9 / 4);
+    printf("floating division: 9. / 4. is %1.2f \n", 9. / 4.);
+    printf("mixed division:    9. / 4  is %1.2f \n", 9. / 4);
+ 
+    return 0;
+ 
+    /*
+     * Last printf() call includes a case of "mixed types" by having a 
+     * floating-point value divided by an integer. Normally we should 
+     * avoid mixing types.
+     */
+}
+
+Sample Run of the above program:
+
+integer division: 10 / 4 is 2
+integer division: 12 / 3 is 4
+integer division: 9 / 4 is 2
+floating division: 9. / 4. is 2.25
+mixed division: 9. / 4 is 2.25
+
+Notice how integer division does not round to the nearest integer, but always truncates (that is, discards the entire fractional part). When we mixed integers with floating point, the answer came out the same as floating point. Actually, the computer is not really capable of dividing a floating-point type by an integer type, so the compiler converts both operands to a single type. In this case, the integer is converted to floating point before division.
+
+Now, let’s see how integer division with negative numbers work. One could take the view that the rounding procedure consists of finding the largest integer smaller than or equal to the floating-point number. Certainly, 3 fits that description when compared to 3.9. But what about –3.9? The largest integer method would suggest rounding to –4 because –4 is less than –3.8. But another way of looking at the rounding process is that it just dumps the fractional part; that interpretation, called truncating toward zero, suggests converting –3.9 to –3. C99 standard says just truncate the fractional part.
+
+Now, what happens when we combine more than one operation into one statement? Then we check for operator precedence.
+
+Operator Precedence
+
+Consider the following line of code:
+
+    result = 19.0 + 60.0 * n / SCALE;
+
+This statement has an addition, a multiplication, and a division operation. Which operation takes place first? Is 19.0 added to 60.0, the result of 79.0 then multiplied by n, and that result then divided by SCALE? Is 60.0 multiplied by n, the result added to 19.0, and that answer then divided by SCALE? Is it some other order? Let’s take n to be 6.0 and SCALE to be 2.0. If you work through the statement using these values, you will find that the first approach yields a value of 237. The second approach yields 189.5. A C program must have some other order in mind, because it would give a value of 199.0 for result.
+
+Clearly, the order of executing the various operations can make a difference, so C needs unambiguous rules for choosing what to do first. C does this by setting up an operator pecking order. Each operator is assigned a precedence level. As in ordinary arithmetic, multiplication and division have a higher precedence than addition and subtraction, so they are performed first. What if two operators have the same precedence? If they share an operand, they are executed according to the order in which they occur in the statement. For most operators, the order is from left to right. (The = operator operates from right to left) Therefore, in the statement
+
+    result = 19.0 + 60.0 * n / SCALE;
+
+The order of operations is as follows:
+
+60.0 * n
+
+The first * or / in the expression (assuming n is 6 so that 60.0 * n is 360.0)
+
+360.0 / SCALE
+
+Then the second * or / in the expression
+
+19.0 + 180
+
+Finally (because SCALE is 2.0), the first + or – in the expression, to yield 199.0 
+
+
+#endif
