@@ -1,0 +1,126 @@
+#if 0
+
+#if 0
+A single Bit is the basic unit of Storage, stores either 1 or 0. Therefore as bits move left or right in a value of specific type viz. integer, char etc. their values change. Moving bits in a value in C Language is performed using Left or Right Shift Operators. Because these operators operate on individual bits, these are called Bitwise operators. These operators work on individual bits of values of variables of Integer Data Type in their signed or unsigned form. Characters are internally integers and these operators, therefore, work with them.
+
+Left shift operator is represented by “<<" symbol and right shift by ">>” symbol. These operators are Binary operators, require two operands on either side and both must be integers. The syntax for left and right shift is as follows:
+
+variable-name right/left-shift-operator no-of-bits-by-which-to-shift;
+
+    val >> 5;  /* shift the value in val to the right by 5 bits */
+    num << 5;  /* shift the value in num to the left by 5 bits */
+
+Shifting is called to be Logical when performed on unsigned integers in either direction, either right or left. In Logical Shift, during shifting either side, empty slots are padded with Zeros. For example:
+
+#endif
+
+
+/* 
+ * rlshift.c -- program uses left and right shift operators with unsigned
+ * integers
+ */
+#include <stdio.h>
+int main(void)
+{
+    unsigned int b = 16, result;
+ 
+    printf("value of exp. result = b >> 3 is %d\n", result = b >> 3);
+    printf("value of b after right shift by 3 bits, is %d\n", b); 
+    printf("value of exp. result = b << 3 is %d\n", result = b << 3);
+    printf("value of b after left shift by 3 bits, is %d\n", b); 
+ 
+    /* note that value of b remains same after left or right shift */
+    /* only result changes */
+ 
+    return 0;
+}
+
+Shifting a value to the right by n bits has the effect of dividing the value by the power of 2 raised to n and shifting the value to left by n bits has the effect of multiplying value by power of 2 raised to n. For example:
+
+/* 
+ * rlshift_effect.c -- program displays result of left or right  shift of
+ * values of unsigned integers
+ */
+#include <stdio.h>
+int main(void)
+{
+    unsigned int b = 16;
+ 
+    printf("value of exp. b >>= 3 is %d\n", b >>= 3);
+    printf("value of b after right shift by 3 bits, is %d\n", b); 
+    printf("value of exp. b <<= 3 is %d\n", b <<= 3);
+    printf("value of b after left shift by 3 bits, is %d\n", b); 
+ 
+    /*
+     * note that value of b after right shift by 3 bits is as
+     * dividing it by 2 raised to 3
+     * and shifting it to left by 3 bits has effect of it is being 
+     * multiplied by 2 raised to 3
+     */
+ 
+    return 0;
+}
+
+Now, we consider what happens when the value in the variable is shifted either side but by Negative Number or what happens when shift counts are larger than number of bits in the operand. For example:
+
+    boys >> -6; 
+    boys << -6;
+    boys >> 35;
+
+The standard states that the behaviour of such Shifts is implementation specific. We should avoid using such types of shifts because their effects are unpredictable and non-portable.
+
+Arithmetic Shifts
+
+So far, we considered shifting of unsigned integer numbers right or left by given bits, and filled in thus produced empty spaces with zeroes. When Arithmetic right shift is performed on negative number, then sign bit is copied to the empty slots created in shifting. For example:
+
+/* rshift_negtive_val.c -- program performs right shift on -ve integers */
+#include <stdio.h>
+int main(void)
+{
+    int hall = -16;
+ 
+    printf("value of exp. hall >>= 3 is %d\n", hall >>= 3);
+    printf("value of hall, -ve value, after right shift by 3 bits, "
+           "is %d\n", hall); 
+ 
+    /*
+     * negative numbers are stored in computer in 2's complement form result
+     * of right shift of a -ve number is -ve because sign bit 1 is copied 
+     * into empty slots
+     */
+ 
+    return 0;
+}
+
+Arithmetic and Logical left shifts are Identical. Only the right shifts differ, and then only for negative values. Therefore, programs that do right shifts on signed values are inherently non-portable.
+
+Uses of Shift Operators:
+For example:
+
+/* count_one_bit.c: Program counts 1 bits in a given unsigned integer */
+#include <stdio.h>
+void count1bits(int);
+ 
+int main(void)
+{
+    int num;
+ 
+    printf("enter some unsigned integer number\n");
+    scanf("%d", &num);
+ 
+    count1bits(num);      /* call to fun. */    
+    return 0;
+}
+void count1bits(int num1)
+{
+    int ones = 0;
+ 
+    while (num1 != 0) {
+        if (num1 % 2 != 0) 
+            ones++;
+        num1 >>= 1;
+    }
+    printf("the number of Ones in the Value is %d\n", ones);
+}
+
+#endif
