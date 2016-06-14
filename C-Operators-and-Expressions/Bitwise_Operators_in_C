@@ -1,0 +1,190 @@
+#if 0
+C’s Bitwise Operators:
+
+C offers Bitwise logical operators and shift operators. In the following examples, we write out values in binary notation so that we can see what happens to the bits when they are shifted either right or left. In an actual program, we would use integer variables or constants written in the usual forms. For example, instead of 00011001(in Binary), we would use 25 or 031(in Octal) or 0x19(in Hexadecimal). For our examples, we will use 8-bit numbers, with the bits numbered 7 through 0, left to right.
+
+Bitwise Logical Operators
+
+The four bitwise logical operators work on integer-type data, including char. Characters are internally Integers which occupy One Byte of Storage. They are called bitwise because they operate on each bit independently of the bit to the left or right. Don’t confuse them with the regular logical operators (&&, ||, and !), which operate on values as a whole.
+
+One’s Complement, or Bitwise Negation: ~
+
+The unary operator ~ toggles each 1 to a 0 and each 0 to a 1. For example:
+
+    ~(10011010)   /* some expression */
+    (01100101)    /* resulting value */
+
+Suppose that val is an unsigned char assigned the value 10. In binary, 10 is 00001010. Then ~val has the value 11110101, or 245. Note that the operator does not change the value of val, just as 5 * val does not change the value of val; val is still 10, but it does create a new value that can be used or assigned elsewhere. For example:
+
+    newval = ~val;      /* value in val is unchanged */
+    printf("%d", val);  /* unchanged val */
+    printf("%d", ~val); /* got the new value printed but val is unchanged */
+
+Now, If we want to change the value of val to ~val, use simple assignment as:
+
+    val = ~val; /* value in val is now updated to ~val */
+
+Bitwise AND: &
+
+The binary operator & produces a new value by making a bit-by-bit comparison between two operands. For each bit position, the resulting bit is 1 only if both corresponding bits in the operands are 1. (In terms of true/false, the result is true only if each of the two bit operands is true.) Therefore, expression
+
+    (10010011) & (00111101)   /* some exp. */
+    (00010001)                /* resulting value. */
+    /* Reason is that only bits 4 and 0 are 1 in both operands. */
+
+C also has a combined bitwise AND-assignment operator: &=. The statement
+
+    val &= 0377;
+    val = val & 0377;  /* both statements are equivalent */
+
+Bitwise OR: |
+
+The binary operator | produces a new value by making a bit-by-bit comparison between two operands. For each bit position, the resulting bit is 1 if either of the corresponding bits in the operands is 1. (In terms of true/false, the result is true if one or the other bit operands are true or if both are true.) Therefore, expression
+
+    (10010011) | (00111101)  /* some exp. */
+    (10111111)               /* resulting value */
+    /* because 6th bit in two operands is 0 */
+
+C also has a combined bitwise OR-assignment operator: |=. The statements
+
+    val |= 0377;      /* in compact form */
+    val = val | 0377; /* two statements are equivalent */
+
+Bitwise EXCLUSIVE OR: ^
+
+The binary operator ^ makes a bit-by-bit comparison between two operands. For each bit position, the resulting bit is 1 if one or the other (but not both) of the corresponding bits in the operands is 1. (In terms of true/false, the result is true if one or the other bit operands—but not both— is true.) Therefore, expression
+
+    (10010011) ^ (00111101)  /* some exp. */
+    (10101110)               /* resulting value. */
+    /* Note that because bit position 0 has the value 1 in both operands, */
+    /* the resulting 0 bit has value 0. */
+    
+C also has a combined bitwise EXCLUSIVE OR-assignment operator: ^=. The statement
+
+    val ^= 0377;
+    val = val ^ 0377; /* both are equivalent statements */
+
+Usage: Masks
+
+The bitwise AND operator is often used with a mask. A mask is a bit pattern with some bits set to on (1) and some bits to off (0). To see why a mask is called a mask, let’s see what happens when a quantity is combined with a mask by using &. For example, suppose you define the symbolic constant MASK as 2 (that is, binary 00000010), with only bit number 1 being nonzero. Then the statement
+
+    flags = flags & MASK;  /* flags is some variable of type int */
+    flags &= MASK;         /* same statement in compact form */
+
+would cause all the bits of flags (except bit 1) to be set to 0 because any bit combined with 0 using the & operator yields 0. Bit number 1 will be left unchanged. (If the bit is 1, 1 & 1 is 1; if the bit is 0, 0 & 1 is 0.) This process is called “using a mask” because the zeros in the mask hide the corresponding bits in flags.
+
+One common C usage is this statement:
+
+    ch &= 0xff;        /* 0xff acts here as a MASK*/
+
+The value 0xff, recall, is 11111111 in binary. This mask leaves the final 8 bits of ch alone and sets the rest to 0. Regardless of whether the original ch is 8 bits, 16 bits, or more, the final value is trimmed to something that fits into a single byte. In this case, the mask is 8 bits wide.
+
+Usage: Turning Bits On
+
+Sometimes we might need to turn on particular bits in a value while leaving the remaining bits unchanged. For instance, an IBM PC controls hardware through values sent to ports. To turn on, say, the speaker, we might have to turn on the 1 position bit while leaving the others unchanged. We can do this with the bitwise OR operator.For example, consider the MASK, which has bit 1 set to 1 and others 0s. The statement
+
+    flags = flags | MASK;
+    flags |= MASK;       /* in compact form */
+
+sets bit number 1 in flags to 1 and leaves all the other bits unchanged. This follows because any bit combined with 0 by using the | operator is itself, and any bit combined with 1 by using the | operator is 1.
+
+Usage: Turning Bits Off
+
+Just as it’s useful to be able to turn on particular bits, for specific purposes, without disturbing the other bits, it’s useful to be able to turn them off. Suppose you want to turn off bit 1 in the variable flags. Once again, MASK has only the 1 bit turned on. We can do this as:
+
+    flags = flags & ~MASK;
+    flags &= ~MASK;
+
+Because MASK is all 0s except for bit 1, ~MASK is all 1s except for bit 1. A 1 combined with any bit using & is that bit, so the statement leaves all the bits other than bit 1 unchanged. Also, a 0 combined with any bit using & is 0, so bit 1 is set to 0 regardless of its original value.
+
+Another Usage: Toggling Bits
+
+Toggling a bit means turning it off if it is on, and turning it on if it is off. We can use the bitwise EXCLUSIVE OR operator to toggle a bit. The idea is that if b is a bit setting (1 or 0), then 1 ^ b is 0 if b is 1 and is 1 if b is 0. Also 0 ^ b is b, regardless of its value. Therefore, if we combine a value with a mask by using ^, values corresponding to 1s in the mask are toggled, and values corresponding to 0s in the mask are unaltered. To toggle bit 1 in flag, we can do either of the following:
+
+    flag = flag ^ MASK; 
+    flag ^= MASK;         /* in compact form */
+
+Usage: Checking the Value of a Bit
+
+We have seen how to change the values of bits. Suppose, instead, that we want to check the value of a bit. For example, does flag have bit 1 set to 1?
+
+Even if bit 1 in flag is set to 1, the other bit setting in flag can make the comparison untrue. Instead, we must first mask the other bits in flag so that we compare only bit 1 of flag with MASK, for example:
+
+    if ((flag & MASK) == MASK)
+        puts("Wow! flag has bit 1 set to 1!");
+
+In the above example, bitwise operators have lower precedence than ==, so the parentheses around flag & MASK are needed.
+
+To avoid information peeking around the edges, a bit mask should be at least as wide as the value it’s masking.
+
+Bitwise Shift Operators
+
+Now let’s look at C’s shift operators. The bitwise shift operators shift bits to the left or right. Again, we will write binary numbers explicitly to show the mechanics.
+
+Left Shift: <<
+
+The left shift operator (<<) shifts the bits of the value of the left operand to the left by the number of places given by the right operand. The vacated positions are filled with 0s, and bits moved past the end of the left operand are lost. In the following example, then, each bit is moved two places to the left:
+
+    (10001010) << 2  /* some expression */
+    (00101000)       /* resulting value */
+
+This operation produces a new bit value, but it doesn’t change its operands. For example, suppose john is 1. Then
+john << 2 is 4, but john is still 1. We can use the left-shift assignment operator (<<=) to actually change a variable's value. This operator shifts the bit in the variable to its left by the number of places given by the right-hand value. For example:
+
+    int john = 1;
+    int akram;
+ 
+    akram = john << 2;   /* assigns 4 to akram */
+    john <<= 2;          /* changes john to 4 */
+
+Right Shift: >>
+
+The right shift operator (>>) shifts the bits of the value of the left operand to the right by the number of places given by the right operand. Bits moved past the right end of the left operand are lost. For unsigned types, the places vacated at the left end are replaced by 0s. For signed types, the result is machine dependent. The vacated places may be filled with 0s, or they may be filled with copies of the sign (leftmost) bit. For example:
+
+    (10001010) >> 2    /* some expression, signed value */
+    (00100010)         /* resulting value, some systems */
+    (10001010) >> 2    /* some expression, signed value */
+    (11100010)         /* resulting value, other systems */
+
+For an unsigned value, we have the following:
+
+    (10001010) >> 2     /* expression, unsigned value */
+    (00100010)          /* resulting value, all system */
+
+Each bit is moved two places to the right, and the vacated places are filled with 0s.
+
+The right-shift assignment operator (>>=) shifts the bits in the left-hand variable to the right by the indicated number of places, as shown here:
+
+    int sweet = 16;
+    int bitter;
+ 
+    bitter = sweet >> 3; /* bitter now has value 2, sweet still 16 */
+    sweet >>=3;          /* sweet changed to 2 */
+
+Usage: Bitwise Shift Operators
+
+The bitwise shift operators can provide swift, efficient (depending on the hardware) multiplication and division by powers of 2:
+
+    number << n;  /* Multiplies number by 2 to the nth power */
+    number >> n;  /* 
+                   * Divides number by 2 to the nth power if number is not
+                   * negative
+                   */
+
+These shift operations are analogous to the decimal system procedure of shifting the decimal point to multiply or divide by 10.
+
+The shift operators can also be used to extract groups of bits from larger units. Suppose, for example, we use an unsigned long value to represent color values, with the low-order byte holding the red intensity, the next byte holding the green intensity, and the third byte holding the blue intensity. Supposed we then wanted to store the intensity of each color in its own unsigned char variable. Then we could do something like this:
+
+    #define BYTE_MASK 0xff
+ 
+    unsigned long color = 0x002a162f;
+    unsigned char blue, green, red;
+ 
+    red = color & BYTE_MASK;
+    green = (color >> 8) & BYTE_MASK;
+    blue = (color >> 16) & BYTE_MASK;
+
+The code uses the right-shift operator to move the 8-bit color value to the low-order byte, and then uses the mask technique to assign the low-order byte to the desired variable. 
+
+
+#endif
