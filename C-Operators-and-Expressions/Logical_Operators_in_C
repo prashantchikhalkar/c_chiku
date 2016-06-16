@@ -1,0 +1,142 @@
+#if 0
+We know that if, while and for statements often use relational expressions as tests or test conditions. Sometimes we find it useful to combine two or more relational expressions. For example, suppose we want a program that counts how many times the characters other than single or double quotes appear in an input sentence. We can use logical operators to meet this need, and can use the period character (.) to identify the end of a sentence.
+
+/* charcount.c  -- use the logical AND operator */
+#include <stdio.h>
+#define PERIOD '.'
+int main(void)
+{
+    int ch;
+    int charcount = 0;
+ 
+    /* getchar() returns integer that's why I chose ch to be an integer */
+ 
+    while ((ch = getchar()) != PERIOD) {
+        if (ch != '"' && ch != '\'')
+            charcount++;
+    }
+ 
+    printf("There are %d non-quote characters.\n", charcount);
+    return 0;
+}
+
+Following we have a sample run:
+
+“Children, don’t you know how to behave with elder people”, asked the father.
+
+There are 73 non-quote characters.
+
+The action begins as the program reads a character and checks to see whether it is a period, because the period identifies the end of a sentence. Next comes something new and interesting, a statement using the logical AND operator, &&. We can translate the if statement as, “If the character is not a double quote AND if it is not a single quote, increase charcount by 1.”
+
+Both conditions must be true if the whole expression is to be true. The logical operators have a lower precedence than the relational operators, so it is not necessary to use additional parentheses to group the sub-expressions. C has three logical operators.
+
+   Operator                         Meaning
+      &&                              and
+      ||                              or
+      !                               not
+
+Suppose exp1 and exp2 are two simple relational expressions, such as:
+
+    exp1: okey > bye 
+    exp2: money == loan
+
+Then we can state the following:
+
+exp1 && exp2 is true only if both exp1 and exp2 are true.
+exp1 || exp2 is true if either exp1 or exp2 is true or if both are true.
+!exp1 is true if exp1 is false, and it’s false if exp1 is true.
+
+Apart from this, Logical Operators AND and OR exert order of evaluation of the expression in which they appear. That is, in an exp. with AND operator, if operand on the left of the AND operator is FALSE, then operand on the right is not evaluated at all and result of the entire exp. is FALSE. Well! Now in an exp. with OR operator, if operand on the left of the OR operator is TRUE, then operand on the right is not evaluated at all and result of the entire exp. is TRUE. Some clear examples:
+
+    10 > 8 && 3 > 7;  /* FALSE */
+    3 > 7 && 10 > 8;  /* FALSE */
+ 
+    /* 
+     * because 3 > 7 is false. sub-exp. 10 > 8 however, is
+     * TRUE but not evaluated at all.
+     */
+ 
+    3 > 7 || 10 > 8;  /* TRUE */ 
+    10 > 8 || 3 > 7;  /* TRUE */
+ 
+    /* sub-exp. 3 > 7, which is FALSE, is not evaluated at all */
+ 
+    !(3 > 7)  /* TRUE because 3 is not greater than 7 */
+
+Precedence
+
+The ! operator has a very high precedence — higher than multiplication, the same as the increment operators, and just below that of parentheses. The && operator has higher precedence than ||, and both rank below the relational operators and above assignment in precedence. Therefore, the expression
+
+a > b && b > c || b > d
+
+would be interpreted as
+
+((a > b) && (b > c)) || (b > d)
+
+/* parentheses used are however not necessary */
+
+That is, b is between a and c, or b is greater than d.
+
+Order of Evaluation
+
+Aside from those cases in which two operators share an operand, C ordinarily does not guarantee which parts of a complex expression are evaluated first. For example, in the following statement, the expression 5 + 3 might be evaluated before 9 + 6, or it might be evaluated afterwards:
+
+something = (5 + 3) * (9 + 6);
+
+This ambiguity was left in the language so that compiler designers could make the most efficient choice for a particular system. One exception to this rule is the treatment of logical operators. C guarantees that logical expressions are evaluated from left to right in a way that program doesn’t move to the next operand until preceding operand is evaluated fully. Furthermore, it guarantees that as soon as an element is found that invalidates the expression as a whole, the evaluation stops. These guarantees make it possible to use constructions such as the following:
+
+while ((c = getchar()) != ‘ ‘ && c != ‘\n’)
+
+This construction sets up a loop that reads characters up to the first space or newline character. The first sub-expression gives a value to c, which then is used in the second sub-expression. Without the order guarantee, the computer might try to test the second expression before finding out what value c has.
+
+Let’s see another example:
+
+    if (number != 0 && 12 / number == 2)
+        printf("The number is 5 or 6.\n");
+    /*
+     * If number has the value 0, the first sub-expression is false, 
+     * and the relational expression is not evaluated any further.  
+     * This spares the computer the trauma of trying to divide by zero.
+     */
+
+Consider one more example:
+
+    while ( x++ < 10 && x + y < 20)
+    /*
+     * The fact that the && operator is a sequence point meaning that 
+     * program doesn't switch to next exp. until solves out the preceding
+     * one. guarantees that x is incremented before the expression on the 
+     * right is evaluated.
+     */
+
+Ranges
+
+We can use the && operator to test for ranges. For example, to test for score being in the range 90 to 100, we can do this as:
+
+    if (range >= 90 && range <= 100)
+        printf("Good show!\n");
+ 
+    /*
+     * It's important to avoid imitating common mathematical 
+     * notation, as in the following:
+     */
+ 
+    if (90 <= range <= 100)    /* NO! Don't do it! */
+        printf("Good show!\n");
+    /* 
+     * The problem is that the code is a semantic error, not a syntax error,
+     * so the compiler will not catch it. Because the order of evaluation 
+     * for the <= operator is left-to-right, the test expression is 
+     * interpreted as follows:
+     */
+    (90 <= range) <= 100
+    /*
+     * The sub-expression 90 <= range either has the value 1 (for 
+     * true) or 0 (for false). 
+     * Either value is less than 100, so the whole expression is    
+     * always true, regardless of the value of range. So use && for 
+     * testing for ranges.
+     */
+     
+     
+#endif
