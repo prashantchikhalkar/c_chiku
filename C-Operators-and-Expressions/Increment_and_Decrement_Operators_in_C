@@ -1,0 +1,129 @@
+Well! ++ and — are two Increment and decrement operators respectively in C. Each operator has two forms and these are prefix and postfix forms. In prefix form, operand comes after the operator while in postfix form operand comes before the operator. For example:
+
+    ++man;  /* prefix form */
+    cats++; /* postfix form */
+ 
+    --days;
+    nights--;
+
+Notice, there must not be any space between the operand and the operator. Also, ++ and — are Unary operators that is each takes just one operand! Being Unary operators they have very high precedence and are put above the arithmetic operators in the precedence table.
+
+How they Work: ++ and — operators work the same except ++ increments its operand while — decrements its operand. ++ operator in either form increments its operand by value of 1. For example:
+
+    ++man;      /* prefix form; increments man by 1 */
+    cats++;     /* postfix form; increments cats by 1 */
+ 
+    --days;     /* decrements days by 1*/
+    nights--;   /* decrements nights by 1*/
+
+One more example:
+
+/* plus_one.c -- incrementing: prefix and postfix */
+#include <stdio.h>
+int main(void)
+{
+    int num1 = 0, num2 = 0;
+ 
+    while (num1 < 5) {
+        num1++;
+        ++num2;
+ 
+        printf("num1  %d, num2 = %d \n", num1, num2)
+    }
+    return 0;
+}
+
+Running plus_one.c produces this output:
+
+    num1 = 1, num2 = 1
+    num1 = 2, num2 = 2
+    num1 = 3, num2 = 3
+    num1 = 4, num2 = 4
+    num1 = 5, num2 = 5
+
+The program counted to five twice and simultaneously. We could get the same results by replacing the two increment statements with this:
+
+    num1 = num1 + 1;
+    num2 = num2 + 1;
+
+Another example:
+
+    shoe = 3.0;
+ 
+    while (shoe < 18.5) {
+        foot = SCALE * size + ADJUST;
+        printf("%10.1f %20.2f inches\n", shoe, foot);
+        ++shoe;
+    }
+
+
+However, we still haven’t taken full advantage of the increment operator. We can shorten the fragment this way:
+
+    shoe = 2.0;
+ 
+    while (shoe++ < 18.5) {
+        foot = SCALE * size + ADJUST;
+        printf("%10.1f %20.2f inches\n", shoe, foot);
+    }
+
+Second, what’s so good about this approach? It is more compact. More important, it gathers in one place the two processes that control the loop. The primary process is the test: Do you continue or not? In this case, the test is checking to see whether the shoe size is less than 18.5. The secondary process changes an element of the test; in this case, the shoe size is increased.
+
+Suppose you forgot to change the shoe size. Then shoe would always be less than 18.5, and the loop would never end. The computer would churn out line after identical line, caught in a dreaded infinite loop. Eventually, you would lose interest in the output and have to kill the program somehow. Having the loop test and the loop change at one place, instead of at separate locations, helps you to remember to update the loop.
+
+A disadvantage is that combining two operations in a single expression can make the code harder to follow and can make it easier to make counting errors.
+
+Another advantage of the increment operator is that it usually produces slightly more efficient machine language code because it is similar to actual machine language instructions.
+
+But there is difference between prefix and postfix increments when an expression contains two or more different terms then they evaluate differently. For example:
+
+    y = a + ++man;  /* prefix form; increments man by 1 */
+    y = a + cats++; /* postfix form; increments cats by 1 */
+ 
+    /* 
+     * in the first exp. man is incremented by 1 before it is used in
+     * the exp. while in the second the value of cats is incremented
+     * after it is used in the exp.
+     */
+
+How does this happen? Actually, in any exp. with two or more terms, copy of operand, with which ++ operator is associated, is used. In prefix form, operand is first incremented then copy of operand is used in the exp. In postfix form copy of original value of the operand is created and used in the exp. then operand is incremented. For example:
+
+    b = ++i;  /* different result for b if i++ is used */
+    ++i;      /* line 1 */
+    b = i;    /* same result for b as if i++ used in line 1 */
+
+Precedence of ++ and — operators
+
+The increment and decrement operators have a very high precedence of association; only parentheses are higher. Therefore, x * y++ means (x) * (y++), not (x * y)++, which is fortunate because the latter is invalid. The increment and decrement operators affect a variable (or, more generally, a modifiable lvalue), and the combination x * y is not itself a variable, although its parts are.
+
+Don’t confuse precedence of these two operators with the order of evaluation. Suppose you have the following:
+
+    y = 2;
+    n = 3;
+ 
+    nextnum = (y + n++) * 6;
+
+
+What value does nextnum get? Substituting in values yields
+
+    nextnum = (2 + 3) * 6 = 5 * 6 = 30
+
+Only after n is used is it increased to 4. Precedence tells us that the ++ is attached only to the n, not to y + n. It also tells us when the value of n is used for evaluating the expression, but the nature of the increment operator determines when the value of n is changed.
+
+When n++ is part of an expression, you can think of it as meaning “use n; then increment it.” On the other hand, ++n means “increment n; then use it.”
+
+Another possible source of trouble is a statement like this one:
+
+    ans = num / 2 + 5 * (1 + num++);
+
+Again, the problem is that the compiler may not do things in the same order you have in mind. You would think that it would find num/2 first and then move on, but it might do the last term first, increase num, and use the new value in num/2. There is no guarantee.
+
+Yet another troublesome case is this:
+
+    n = 3;
+    y = n++ + n++;
+
+Certainly, n winds up larger by 2 after the statement is executed, but the value for y is ambiguous. A compiler can use the old value of n twice in evaluating y and then increment n twice. This gives y the value 6 and n the value 5, or it can use the old value once, increment n once, use that value for the second n in the expression, and then increment n a second time. This gives y the value 7 and n the value 5. Either choice is allowable. More exactly, the result is undefined, which means the C standard fails to define what the result should be.
+
+Remember how we can easily avoid these problems:
+1. Don’t use increment or decrement operators on a variable that is part of more than one argument of a function.
+2. Don’t use increment or decrement operators on a variable that appears more than once in an expression. 
