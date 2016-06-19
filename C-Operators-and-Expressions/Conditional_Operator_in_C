@@ -1,0 +1,42 @@
+Conditional operator is Ternary Operator that is it takes 3 operands. The general syntax of this operator is as:
+
+    expression1 ? expression2 : expression3;
+
+Besides Operator Precedence and Associativity, It, like the logical operators, does exert some control on the order of evaluation of the entire expression. For example:
+
+    (number >= 1000) ? a + b + c : d + e + f;
+
+Here in the above example, if (number >= 1000) is TRUE then result of whole expression is expression2 which is (a + b + c) and expression3 (d + e + f) is not evaluated at all. But if (number >= 1000) evaluates to FALSE then result of the entire expression is expression3 which is (d + e + f) and expression2 isn’t evaluated at all.
+
+Basically, conditional operator is same as if-else construct. We can rewrite the above conditional expression as:
+
+    if (expression1)
+        expression2;
+    else
+        expression3;
+
+Advantages of conditional operator over if-else construct:
+
+Then what is the difference between conditional expression and if-else statement. Firstly, conditional expression is little bit more compact than if-else construct. For example:
+
+    /* b written twice using if-else */
+    if (ch == 'A')
+        b = 5; 
+    else		    
+        b = ch + 5;
+ 
+    /* b written once using conditional operator */
+    b = (ch == 'A') ? 5 : ch + 5;
+
+Consider another example:
+
+    /* subscript written twice using if-else */
+    if (a > 10)
+        b[a + c / 5 * 10 - 2] = 100;
+    else 		
+        b[a + c / 5 * 10 - 2] = 1000;
+ 
+    /* subscript written once using conditional operator */
+    b[a + c / 5 * 10 - 2] = a > 10 ? 100 : 1000;
+
+Notice in the above example, subscript is a complex exp. and there are chances of errors while typing it twice as in if-else. So, using the conditional statement, we can avoid such errors. 
