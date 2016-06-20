@@ -1,0 +1,106 @@
+Comma operator represented by ‘,’ ensures thea evaluation from left to right, one by one, of two or more expressions, separated with commas, and result of entire expression is value of rightmost expression. For example:
+
+    int a = 10, b = 20, c = 30;
+    int x;
+ 
+    printf("Value of exp. "x = a + b, b + c, c + a;" is %d\n", 
+        (x = a + b, b + c, c + a));
+ 
+    /* value of x is value of rightmost sub-exp. c + a */
+
+But what happens if we mistakenly write the above example this way:
+
+     int a = 10, b = 20, c = 30;
+     int x;
+ 
+     printf("Value of exp. "x = a + b, b + c, c + a;" is %d\n", 
+             x = a + b, b + c, c + a);
+     /* value of x is value of leftmost sub-exp. a + b */
+
+Actually, in the above printf() statement, this time there are three arguments, separated with commas, following format string for one format specifier. All expressions are evaluated but value of x = a + b is printed. To avoid such problems, enclose the entire expression in pair of parenthesis.
+
+Another example:
+
+    int x, y, z, a = 10, b = 20, c = 30;
+ 
+    x = a + b, y = b + c, z = c + a;
+ 
+    printf("In x = a + b, y = b + c, z = c + a; x is %d y is %d"
+           "and z is %d", x, y, z);
+    /* above statement is same as x = a + b; y = b + c; z = c + a; */
+
+One more example:
+
+/* comma1.c -- how comma operator works */
+#include <stdio.h>
+int main(void)
+{
+    int x, y, z;
+    int  a = 10, b = 20, c = 30;
+ 
+    printf("The value of entire expression a + b, b + c, c + a" 
+             "is %d\n", (a + b, b + c, c + a));
+    printf("Value of the entire exp. a, a++, a++; is %d\n",
+             (a, a++, a++));
+ 
+    return 0;
+}
+
+Usage of Comma Operator
+This operator is of great worth in multiple initializations, updating values in for and while loop statements. For example:
+
+/*comma2.c----usage of comma operator */
+#include <stdio.h>
+int main(void)
+{
+    int x, y, z;
+ 
+    for (x = getval(), y = x + 1; y >= 0 ; x++, y = x + 1) {
+          ...
+        x = getval();
+    }         
+ 
+    return 0;
+}
+
+Another example:
+
+/*comma3.c----use with while loop test exp. */
+#include <stdio.h>
+int main(void)
+{
+    int a;
+ 
+    a = getval();
+    count(a);
+    while (a > 0) {
+        ...	
+        a = getval();
+        count(a);
+    }
+ 
+    return 0;
+}
+
+In the above program, test exp is preceded by two statements to obtain the value of a and the same pair of statements are needed at the end of while loop. However, with comma operator, we can rewrite this loop as:
+
+/*comma3.c----use with while loop test exp. */
+#include <stdio.h>
+int main(void)
+{
+    int a; 
+ 
+    while (a = getval(), count(a), a > 0) { 
+        ...
+    }
+ 
+    return 0; 
+}
+
+Or even in more compact form as:
+
+    while (count(a = getval()), a > 0) {
+        ...
+    }
+
+With this approach, just one copy of the code is needed. Comma operator makes the source program easier to maintain. In future, if there needs some changes, only one copy of the code is to be fixed. 
