@@ -1,0 +1,94 @@
+C doesn’t have an explicit Boolean type so integers are used instead. Boolean values are TRUE and FALSE or ON and OFF or 1 and 0 respectively. According to rule, 1 is considered TRUE and 0 is FALSE. However, any nonzero value is considered to be TRUE and Standard doesn’t say if 1 is more TRUE than any nonzero value. For example, in the following program fragment,
+
+    int a = 10, b = 20;
+ 
+    if (a)
+        if (b)
+            printf("value of a + b is %d\n", a + b);
+ 
+    /*
+     * in this example a and b are integers and used in Boolean context as
+     * "if a is TRUE then if b is TRUE then print the value of a + b
+     */
+
+Consider another example:
+
+    int a = 10, b = 20;
+ 
+    if (a)              /* if a is nonzero */
+        if (b)          /* if b is nonzero */
+            if (a == b) /* a & b are being tested as ints not as boolean */
+                printf("value of a + b; is %d\n", a + b);
+
+Beware that several nonzero values represent TRUE. In the following program two pair of statements seem to be equivalent. For example:
+
+/*
+ * mix_bool_int.c -- program displays ints being tested as boolean values
+ */
+#include <stdio.h>
+#define TRUE 1
+#define FALSE 0
+ 
+int main(void) 
+{
+    int flag;
+ 
+    printf("User, type in some intger value...\n");
+    scanf("%d", &flag);
+ 
+    if (flag == FALSE)    /* if flag is zero or false */
+        (!flag);          /* set flag to 1 */
+ 
+    if (flag == TRUE)     /* if flag is 1 or true */
+         (flag);          /* flag is True */
+ 
+    return 0;
+}
+
+But second pair of statements is not equivalent because if flag is given any arbitrary value other than 1, condition won’t hold. This is because of mixing of Integers & Boolean Values. Therefore, the solution to the problem is to avoid using mixed types. And test a given value for zero or nonzero explicitly. For example, in the following program fragment,
+
+    okey = boys_in_class() >= 10;
+ 
+    if (okey)
+        printf("Good! We set to work today!\n");
+    else 
+        printf("See the class on next working day!");
+
+In the above program fragment, the result of relational exp. “boys_in_class() >= 10” is assigned to okey which is then tested for boolean values True and False.
+
+
+C99 Standard introduced _Bool Type for Boolean Values. Since boolean values 1 or 0 can be represented by just 1 Bit therefore variable of _Bool Type is 1 bit in memory. For example:
+
+/* bool.c---program displays values of _Bool type */
+#include <stdio.h>
+#define TRUE 1
+#define FALSE 0
+ 
+_Bool new_count();
+ 
+int main(void)
+{
+    _Bool okey;
+    int count = 0;
+ 
+    while ((okey = new_count()) == TRUE) {
+        printf("No of Iteration Count is %d\n", ++count);
+    }
+ 
+    printf("Bye!\n");
+    return 0;
+}
+ 
+_Bool new_count()
+{
+    _Bool new;
+    int a, b;
+ 
+    printf("user, enter two intgers...\n");
+    scanf("%d %d", &a, &b);
+ 
+    if (a == b)
+        return new = 1;
+    else
+        return new = 0;
+}
