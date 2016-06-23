@@ -1,3 +1,5 @@
+#if 0
+
 The sizeof operator returns the size, in bytes, of its operand. Recall that a C byte is defined as the size used by the char type. In the past, this has most often been 8 bits, but some character sets may use larger bytes. The operand can be a specific data object either a unary expression such as the name of a variable, array, structure or it can be a type name. If it is a type, such as float, the operand must be enclosed in parentheses. For example:
 
 /* sizeof_1.c -- uses sizeof operator */
@@ -113,3 +115,30 @@ Both files are perfectly legal C, and code in file1.c can apply sizeof to arr an
 Implementation
 
 It is the responsibility of compilers to implement the sizeof operator correctly for each target platform. In many cases, there will be an official Application Binary Interface (ABI) document for the platform, specifying formats, padding, and alignment for the data types, to which the compiler must conform. In most cases, sizeof is a compile-time operator, which means that during compilation sizeof expressions get replaced by constant result-values. However, sizeof applied to a variable length array, introduced in C99, requires computation during program execution. 
+
+#endif
+
+/* 
+ * sizeof_eval_exp.c -- program displays if sizeof evaluates an expression
+ * as operand
+ */
+#include <stdio.h>
+int main(void)
+{
+    int a = 1;
+    int arr[10] = {1,2,3,4,5,6,7,8,9,10};
+ 
+    printf("size of int a and value of a in sizeof (a = 5) is %d bytes "
+           "%d\n", sizeof (a = 5), a);
+ 
+    printf("size of int a and value of a in sizeof (a++) is %d bytes %d\n",
+            sizeof a++, a);
+ 
+    printf("size of arr and value of int arr[5] in sizeof (arr) is %d bytes"
+           " %d\n", sizeof (arr), arr[5]);
+ 
+    printf("size of arr and value of int arr[0] in sizeof (arr[0] = 10) is "
+           "%d bytes %d\n", sizeof (arr[0] = 10), arr[0]);
+ 
+        return 0;
+}
