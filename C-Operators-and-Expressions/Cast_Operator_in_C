@@ -1,0 +1,59 @@
+Sometimes we need to evaluate mixed-type expressions. For example:
+
+/*autocast.c -- automatic type conversions */
+#include <stdio.h>
+int main(void)
+{
+    int a = 1, b = 2;
+    float val = 3, z = 4, x;
+    char new = 'A', old = 'B', ch;
+ 
+    x = a * b + val * new * old;
+    printf("The result of the exp. "x = a * b + val * new * old is %f\n",
+            x = a * b + val * new * old);
+ 
+    ch = a * b + val * new * old;
+    printf("The result of the exp. "ch = a * b + val * new * old is %c\n",
+            ch = a * b + val * new * old);
+ 
+    return 0;
+}
+
+When above program is run on Linux system, the output follows as:
+
+The result of the exp. x = a * b + val * new * old is 12872.000000
+The result of the exp. ch = a * b + val * new * old is H
+
+Exp. “x = a * b + val * new * old” which is composed of different types of values, when evaluated, each type is converted to same higher type. That is integers and characters are promoted to floats implicitly. Promotions are smooth and easy. However, demotions are not always. Mostly, there’s chance of Information Lost in demotions. In the above example, right side of the assignment in the exp. ch = a * b + val * new * old, evaluated to 12872.000000 by implicit conversions of integers and characters to floats and then final result is demoted to character type and there is information lost as result is character H. Because a char type can’t hold a value greater than 255.
+
+To avoid such problems, exercise due care not mixing several different types. It is a good idea to have at least some knowledge of the type conversion rules.
+
+The basic rules are
+
+When appearing in an expression, char and short, both signed and unsigned, are automatically converted to int or, if necessary, to unsigned int. (If short is the same size as int, unsigned short is larger than int; in that case, unsigned short is converted to unsigned int.) Under K&R C, but not under current C, float is automatically converted to double. Because they are conversions to larger types, they are called promotions.
+
+In any operation involving two types, both values are converted to the higher ranking of the two types.
+
+The ranking of types, from highest to lowest, is long double, double, float, unsigned long long, long long, unsigned long, long, unsigned int, and int. One possible exception is when long and int are the same size, in which case unsigned int outranks long. The short and char types don’t appear in this list because they would have been already promoted to int or perhaps unsigned int.
+
+In an assignment statement, the final result of the calculations is converted to the type of the variable being assigned a value. This process can result in promotion, as described in rule 1, or demotion, in which a value is converted to a lower-ranking type.
+
+When passed as function arguments, char and short are converted to int, and float is converted to double. This automatic promotion can be overridden by function prototyping.
+
+The Cast Operator
+
+We should usually steer clear of automatic type conversions, especially of demotions, but sometimes it is convenient to make conversions, provided you exercise care. The type conversions we’ve discussed so far are done automatically. However, it is possible for us to demand the precise type conversion that we want or else document that we know we’re making a type conversion. The method for doing this is called a cast and consists of preceding the quantity with the name of the desired type in parentheses. The parentheses and type name together constitute a cast operator. This is the general form of a cast operator:
+
+    (type) name_quantity;
+
+
+The actual type desired, such as long, is substituted for the word type.
+
+Consider the next two code lines, in which mice is an int variable. The second line contains two casts to type int.
+
+    mice = 1.6 + 1.7;
+    mice = (int) 1.6 + (int) 1.7;
+
+The first example uses automatic conversion. First, 1.6 and 1.7 are added to yield 3.3. This number is then converted through truncation to the integer 3 to match the int variable. In the second example, 1.6 is converted to an integer (1) before addition, as is 1.7, so that mice is assigned the value 1+1, or 2. Neither form is intrinsically more correct than the other; you have to consider the context of the programming problem to see which makes more sense.
+
+Normally, you shouldn’t mix types (that is why some languages don’t allow it), but there are occasions when it is useful. The C philosophy is to avoid putting barriers in your way and to give you the responsibility of not abusing that freedom. 
