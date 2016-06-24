@@ -1,0 +1,338 @@
+There are several Unary Operators in C. Unary operators take just one operand. We have following Unary Operators in C.
+
+! (logical negation),
+~ (one’s complement or bitwise negation),
+– (unary minus),
++ (unary plus),
+& (addressof),
+* (dereferencing),
+++ (pre-increment),
+— (pre-decrement),
+sizeof operator,
+(type) or cast operator
+
+All Unary Operators have associativity from Right to Left. We consider each, one by one.
+
+One’s Complement or Bitwise Negation: ~
+
+Ones Complement is a Bitwise Unary Operator operates on individual bits, turns 0s to 1s and 1s to 0s. All other Bitwise operators are Binary Operators. For example:
+
+/*
+ * itobinary.c -- program to display binary string for a given integer and
+ * inverts given n bits at the end
+ */
+#include <stdio.h>
+char * itobstr(int, char *);
+void show_bstr(const char *);
+int invert_nbits(int num, int no_bits);
+ 
+int main(void)
+{
+    int num, no_bits;
+    char str[ 8 * sizeof (int) + 1 ];
+ 
+    puts("Enter some integer number...");
+    puts("Non numeric number terminates the program!");
+ 
+    while (scanf("%d", &num) == 1) {
+        itobstr(num, str);
+        printf("Number you entered is %d\n", num);
+        show_bstr(str);
+ 
+        printf("Enter no of bits u wanna to invert in the binary string..."
+               "\n");
+        scanf("%d", &no_bits);
+        num = invert_nbits(num, no_bits);
+        show_bstr(itobstr(num, str));
+    }
+    printf("Thank you!\n");
+    return 0;
+}
+ 
+char *itobstr(int n, char * bs)
+{
+    int i;
+    static int size = 8 * sizeof n;
+ 
+    for (i = size - 1; i >= 0; i--, n >>= 1)
+        bs[i] = (00000001 & n) + '0';
+ 
+    bs[size] = '\0';
+    return bs;
+}
+ 
+void show_bstr(const char * bs)
+{
+    int i = 0;
+ 
+    while (bs[i]) {
+        printf("%c", bs[i]);
+        if (++i % 4 == 0 && bs[i])
+            putchar(' ');
+    }
+    putchar('\n');
+}
+ 
+int invert_nbits(int num, int no_bits)
+{
+    int mask = 0;
+    int bitval = 1;
+ 
+    /* we set a given no bits of mask to 1s */
+    while (no_bits-- > 0 ) {
+        mask |= bitval;
+        bitval <<= 1;
+    }
+ 
+    /* now we invert n = no_bits from the end of the binary string bs */
+    return mask ^ num;
+}
+
+Logical Negation !
+
+This is the only Unary Operator in the set of Logical Operators. It operates on Type integer and turns the TRUTH Value of its operand from TRUE to FALSE and Vice-Versa. For example:
+
+/* log_negate.c -- program inverts the truth value of the given integer */
+#include <stdio.h>
+int main(void)
+{
+    int num;
+    _Bool truth_val;
+ 
+    printf("Program inverts the truth value of the integer value\n\n");
+    printf("user, enter some integer...\nnon-integer value terminates "
+           "the program...\n");
+ 
+    while (scanf("%d", &num) == 1) {
+        truth_val = !num;
+        printf("Entered number is %d and its Inverted Truth Value is %d\n",
+                num, truth_val);
+        printf("enter another number or terminate the program by typing "
+               "in non integer val...\n");
+    }
+    printf("Goodbye!\n");
+    return 0;
+}
+
+Remember that any nonzero value in C is considered TRUE while 0 is considered FALSE. Since single bit storage is sufficient to store 1 or 0, so new type _Bool can be used to store either TRUTH Value.
+
+Sign Operators: – and +
+
+The minus sign can also be used to indicate or to change the algebraic sign of a value. For instance, the sequence
+
+    nancy = –12;
+    fancy = –nancy;
+
+gives fancy the value 12.
+
+When the minus sign is used in this way, it is called a unary operator, meaning that it takes just one operand.
+
+The C90 standard adds a unary + operator to C. It doesn’t alter the value or sign of its operand; it just enables you to use statements such as
+
+    bananas = +12;
+
+without getting a compiler complaint. Formerly, this construction was not allowed.
+
+Finding Addresses: The & Operator
+
+One of the most important C concepts (and perhaps the most perplexing) is the pointer, which is a variable used to store an address. We’ve already seen that scanf() uses addresses for arguments. More generally, any C function that modifies a value in the calling function without using a return value uses addresses.
+
+The unary (addressof) & operator gives us the address where a variable is stored. If number is the name of a variable, &number is the address of the variable. We can think of the address as a location in memory. Suppose we have the following statement:
+
+    qual = 24;
+
+Suppose that the address where qual is stored is 0B76. (PC addresses often are given as hexadecimal values.) Then the statement
+
+    printf("%d %p\n", qual, &qual);
+
+would produce this (%p is the specifier for addresses):
+
+    24 0B76
+
+The following program uses the ANSI C %p format for printing the addresses.
+
+/*
+ * The loccheck.c -- Program uses this operator to see where variables of 
+ * the same name but in different functions are kept.
+ */
+#include <stdio.h>
+void mikado(int);             /* declare function, function prototype  */
+int main(void)
+{
+    int pooh = 2, bah = 5;    /* local to main()   */
+ 
+    printf("In main(), pooh = %d and &pooh = %p\n", pooh, &pooh);
+    printf("In main(), bah = %d and &bah = %p\n", bah, &bah); 
+ 
+    mikado(pooh);
+    return 0;
+}
+ 
+void mikado(int bah)           /* define function   */
+{
+    int pooh = 10;             /* local to mikado() */
+ 
+    printf("In mikado(), pooh = %d and &pooh = %p\n", pooh, &pooh);
+    printf("In mikado(), bah = %d and &bah = %p\n", bah, &bah);
+}
+
+
+My system, Linux, produced the following output:
+
+In main(), pooh = 2 and &pooh = 0x7fff3575608c
+In main(), bah = 5 and &bah = 0x7fff35756088
+In mikado(), pooh = 10 and &pooh = 0x7fff3575606c
+In mikado(), bah = 2 and &bah = 0x7fff3575605c
+
+The way that %p represents addresses varies between implementations. However, many implementations, such as one used for this example, display the address in hexadecimal form.
+
+What does this output show? First, the two poohs have different addresses. The same is true for the two bahs. So, as promised, the computer considers them to be four separate variables. Second, the call mikado(pooh) did convey the value (2) of the actual argument (pooh of main()) to the formal argument (bah of mikado()). Note that just the value was transferred. The two variables involved (pooh of main() and bah of mikado()) retain their distinct identities.
+
+We raise the second point because it is not true for all languages. In FORTRAN, for example, the subroutine affects the original variable in the calling routine. The subroutine variable might have a different name, but the address is the same. C doesn’t do this. Each function uses its own variables. This is preferable because it prevents the original variable from being altered mysteriously by some side effect of the called function.
+
+Dereferencing Operator or Indirection Operator: *
+
+Pointers? What are they? Basically, a pointer is a variable (or, more generally, a data object) whose value is a memory address. Just as a char variable has a character as a value and an int variable has an integer as a value, the pointer variable has an address as a value. The term data object refers to region of storage in the computer memory.
+
+If we give a particular pointer variable the name ptr, we can have statements such as the following:
+
+    ptr = &danny;  /* assigns danny's address to ptr */
+
+We say that ptr “points to” danny. The difference between ptr and &danny is that ptr is a variable, and &danny is a constant. If we want, we can make ptr point elsewhere:
+
+    ptr = &kristina;
+    /* make ptr point to kristina instead of to danny */
+
+Now the value of ptr is the address of kristina.
+
+To create a pointer variable, we need to be able to declare its type. Suppose we want to declare ptr so that it can hold the address of an int. To make this declaration, we need to use a new operator. Let’s examine that operator now.
+
+Suppose we know that ptr points to kristina, as shown here:
+
+     ptr = &kristina;
+
+Then we can use the indirection operator * (also called the dereferencing operator) to find the value stored in kristina (don’t confuse this unary indirection operator with the binary * operator of multiplication):
+
+     val = *ptr;  /* finding the value ptr points to */
+
+The statements ptr = &kristina; and val = *ptr; taken together amount to the following statement:
+
+    val = kristina;
+
+Using the address and indirection operators is a rather indirect way of accomplishing this result, hence the name “indirection operator.”
+
+Increment and Decrement Operators: ++ and —
+
+The increment operator performs a simple task; it increments (increases) the value of its operand by 1. This operator comes in two varieties. The first variety has the ++ come before the affected variable; this is the prefix mode. The second variety has the ++ after the affected variable; this is the postfix mode. The two modes differ with regard to the precise time that the incrementing takes place. The short example below shows how the increment operators work.
+
+/* add_one.c -- incrementing: prefix and postfix */
+#include <stdio.h>
+int main(void)
+{
+    int ultra = 0, super = 0;
+ 
+    while (super < 5) {
+        super++;
+        ++ultra;
+        printf("super = %d, ultra = %d \n", super, ultra);
+    }
+        return 0;
+}
+
+Running add_one.c produces this output:
+
+super = 1, ultra = 1
+super = 2, ultra = 2
+super = 3, ultra = 3
+super = 4, ultra = 4
+super = 5, ultra = 5
+
+The program counted to five twice and simultaneously. You could get the same results by replacing the two increment statements with this:
+
+    super = super + 1;
+    ultra = ultra + 1;
+
+These are simple enough statements. Why bother creating one, let alone two, abbreviations? One reason is that the compact form makes your programs neater and easier to follow. These operators give your programs an elegant gloss that cannot fail to please the eye.
+
+
+Another advantage of the increment operator is that it usually produces slightly more efficient machine language code because it is similar to actual machine language instructions. However, as vendors produce better C compilers, this advantage may disappear. A smart compiler can recognize that x = x + 1 can be treated the same as ++x.
+
+Finally, these operators have an additional feature that can be useful in certain delicate situations.
+
+/* post_pre.c -- postfix vs prefix */
+#include <stdio.h>
+int main(void)
+{
+    int a = 1, b = 1;
+    int aplus, plusb;
+ 
+    aplus = a++;       /* postfix */
+    plusb = ++b;       /* prefix  */
+    printf("a   aplus   b   plusb \n");
+    printf("%1d %5d %5d %5d\n", a, aplus, b, plusb);
+ 
+    return 0;
+}
+
+If you and your compiler do everything correctly, you should get this result:
+
+a aplus b plusb
+
+2 1 2 2
+
+Both a and b were increased by 1, as promised. However, aplus has the value of a before a changed, but plusb has the value of b after b changed. This is the difference between the prefix form and the postfix form.
+
+    aplus = a++;  /* postfix: a is changed after its value is used */
+    plusb = ++b;  /* prefix: b is changed before its value is used */
+
+When one of these increment operators is used by itself, as in a solitary ego++; statement, it doesn’t matter which form you use. The choice does matter, however, when the operator and its operand are part of a larger expression, as in the assignment statements we just saw. In this kind of situation, we must give some thought to the result we want.
+You should pay special attention to the examples of increment operators as you read through this book. Ask yourself if you could have used the prefix and the suffix forms interchangeably or if circumstances dictated a particular choice.
+
+Perhaps an even wiser policy is to avoid code in which it makes a difference whether we use the prefix or postfix form. For example, instead of
+
+    b = ++i;  /* different result for b if i++ is used */
+
+use
+
+    ++i;    /* line 1 */
+    b = i;  /* same result for b as if i++ used in line 1 */
+
+Decrementing: —
+
+For each form of increment operator, there is a corresponding form of decrement operator. Instead of ++, use –:
+
+    -- count;   /* prefix form of decrement operator  */
+    count --;   /* postfix form of decrement operator */
+
+The sizeof Operator and the size_t Type
+
+The sizeof operator returns the size, in bytes, of its operand. (Recall that a C byte is defined as the size used by the char type. In the past, this has most often been 8 bits, but some character sets may use larger bytes.) The operand can be a specific data object, such as the name of a variable, or it can be a type. If it is a type, such as float, the operand must be enclosed in parentheses. For example:
+
+/* sizeof_1.c -- uses sizeof operator */
+/* uses C99 %z modifier -- try %u or %lu if you lack %zd */
+#include <stdio.h>
+int main(void)
+{
+    int n = 0;
+    size_t intsize; /* size_t type used */
+ 
+    intsize = sizeof (int);
+    printf("n = %d, n has %zd bytes; all ints have %zd bytes.\n",
+           ++n, sizeof ++n, intsize );
+ 
+    printf("now n has become %d\n", n);
+ 
+    return 0;
+}
+
+C says that sizeof returns a value of type size_t. This is an unsigned integer type, but not a brand-new type. Instead, like the portable types (int32_t and so on), it is defined in terms of the standard types. C has a typedef mechanism that lets us create an alias for an existing type. For example,
+
+    typedef double real;
+
+makes real another name for double. Now you can declare a variable of type real:
+
+    real deal;   /* using a typedef */
+
+The compiler will see the word real, recall that the typedef statement made real an alias for double, and create deal as a type double variable. Similarly, the C header files system can use typedef to make size_t a synonym for unsigned int on one system or for unsigned long on another. Thus, when you use the size_t type, the compiler will substitute the standard type that works for your system.
+
+C99 goes a step further and supplies %zd as a printf() specifier for displaying a size_t value. If your system doesn’t implement %zd, you can try using %u or %lu instead. 
