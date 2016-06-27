@@ -1,0 +1,85 @@
+We are quite very much familiar with various types of assignment statements. For example:
+
+    hny = "Happy New Year 2014!";               /* a character string */
+    count += 1;                                 /* an integer */
+    cats = monkeys + elephants * mice - foxes; 
+    sum = x + y * z / (u * v) + (f = g * h - t);/* exp containing sub exp */
+
+In all the above statements, left side represents a data object. A data object is a region of storage in computer memory where values are stored. These data objects are also called locations in the memory. Variables, arrays, structures are specific labels given to these data objects. Each location in memory has an address. For any value of either type, char, float, int etc. to be stored in computer requires some storage/location. For instance,
+
+/* lvalue3.c -- valid lvalues */
+#include <stdio.h>
+int main(void)
+{
+    int x = 10, y = 20;
+    float marks = 60.75, u = 33.89, v;
+ 
+    v = marks + u * x + y;        /* v here is a valid lvalue */
+    printf("Value of the exp. v = marks + u * x + y is %f\n", v);
+    return 0;
+}
+
+Value of the exp. v = marks + u * x + y is 419.649994 results when program is run.
+
+Some Terminology: Data Objects, Lvalues, Rvalues, and Operands
+
+Data object is a general term for a region of data storage that can be used to hold values. The data storage used to hold a variable or an array is a data object, for instance. C uses the term lvalue to mean a name or expression that identifies a particular data object. The name of a variable, for instance, is an lvalue, so object refers to the actual data storage, but lvalue is a label used to identify, or locate, that storage.
+
+
+Not all objects can have their values changed, so C uses the term modifiable lvalue to identify objects whose value can be changed. Therefore, the left side of an assignment operator should be a modifiable lvalue. Indeed, the l in lvalue comes from left because modifiable lvalues can be used on the left side of assignment operators. The term rvalue refers to quantities that can be assigned to modifiable lvalues. Rvalues can be constants, variables, or any other expression that yields a value.
+
+Now, let’s see some examples of invalid lvalues, means left side of assignment doesn’t represent location or storage.
+
+    5 = men + women + children;
+    /* left side is 5 which is a value not location */
+ 
+    110 = 200 + 300 * 12;
+    /* 110 is integer literal not location */
+
+Consider another example:
+
+/* lvalue1.c -- lvalue error */
+#include <stdio.h>
+int main(void)
+{
+    int i = 10, j = 20, k = 50;
+    float cm = 10.5, mm = 20.9, inch = 12;
+ 
+    5 = 10;
+    return 0;
+}
+
+When program is run, results as:
+lvalue1.c: In function ‘main’:
+lvalue1.c:9:4: error: lvalue required as left operand of assignment
+
+/* lvalue2.c -- lvalue error */
+#include <stdio.h>
+int main(void)
+{
+    char name = 'A';
+ 
+    'A' = 10; /* assigning to character A number 10 */
+    return 0;
+}
+
+Program results as:
+lvalue2.c: In function ‘main’:
+lvalue2.c:8:13: error: lvalue required as left operand of assignment
+
+Pointer expressions as lvalues
+
+For example:
+
+    int candy = 20; /*
+    /* candy a variable has a location into which val 20 is stored */ 
+ 
+    int *iptr;      
+    /* pointer of type int; will point to some integer val */
+ 
+    iptr = &candy;
+    /* now iptr points to candy, location into which 20 is stored */
+ 
+    *iptr = 100; /* assigning candy value 100 through iptr */
+
+Constants either integers, characters, floats all are values and variables of any type are values as well as locations. Pointer expressions also represent values and locations. 
