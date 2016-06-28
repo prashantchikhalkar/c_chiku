@@ -1,0 +1,22 @@
+A WORD in C Programming refers to ANSI Standard size of type int on Linux as 4 bytes or 32 bits. For example:
+
+/* word_size.c -- Program displays size of a word on Linux Platform */
+#include <stdio.h>
+int main(void)
+{
+    int int_size;
+ 
+    printf("Size of all integers is %d bytes\n", sizeof (int));
+    printf("Size of integer variable int_size is %d bytes\n",
+               sizeof int_size);
+    return 0;
+}
+
+However, word size on some systems is 2 bytes. Note however that bigger the size of type int, larger the range of values can be stored. For instance on Linux system, the range of integers is:
+
+/* Minimum and maximum values a `signed int' can hold. */
+    Minimum Value     -2147483648
+    Maximum Value      2147483647
+ 
+/* Maximum value an `unsigned int' can hold. (Minimum is 0.)  */
+    Maximum Value      4294967295U /* U stands as unsigned int */
