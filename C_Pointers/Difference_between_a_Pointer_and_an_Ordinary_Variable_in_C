@@ -1,0 +1,64 @@
+ Question: What is the Difference between a Pointer and an Ordinary Variable in C?
+
+Answer: Okey! We here unravel the differences between Ordinary and Pointer Variables we use in our C Programs as per programming requirements. What is a Variable? First, we should know this. A variable is some storage space set aside, as per type of variable, in memory by the compiler. Precisely, this storage is referred to as a Location in memory into which values are stored. Every Location in memory has an address and always has some value stored in it called as garbage. For example:
+
+/*
+ * diff_ord_ptr_var.c -- program shows differences between ordinary 
+ * and pointer variables
+ */
+#include <stdio.h>
+#define PRICE 50    /* PRICE is a Symbolic Constant not a Variable */
+int main(void)
+{
+    char ch = 'A';           /* ch is character variable */
+    int ival = 100, count;   /* ival is an integer variable */
+    float fval = 3.3;        /* fval is a float variable */
+    double dval = 5.6;       /* dval is a double variable */
+ 
+    char *cp = &ch;          /* cp is a pointer to char */
+    char **dcp = &cp;        /* dcp holds address of pointer-to-char */
+    int *ip = &ival, *ip1;   /* ip is a pointer to integer */
+    float *fp = &fval;       /* fp is a pointer to float */
+    double *dp = &dval;      /* dp is a pointer to double */
+    50.23456;                /* a float constant */
+ 
+    printf("\nValues of Ordinary Variables:\n\tcharacter ch is %10c,"
+           "\n\tinteger ival is %10d,\n\tfloat fval is\t %10f,"
+           "\n\tdouble dval is\t %10lf\n", ch, ival, fval, dval);
+ 
+    /* lf is printf specifier for type double */
+ 
+    printf("\nValues of Pointer Variables:\n\tcharacter pointer cp is %p,"
+           "\n\tinteger pointer ip is %p,\n\tfloat pointer fp is %15p,"
+           "\n\tdouble pointer dp is %p,\n\tpointer to pointer dcp is %p\n",
+           cp, ip, fp, dp, dcp);
+ 
+    printf("\nGarbage Values of Uninitialized:\n\tinteger \"count\" is %10d"
+           "\n\tpointer to int \"ip1\" is %10p\n\n", count, ip1);
+ 
+    /* %p is C99 printf specifier for addresses of memory */
+    return 0;
+}
+
+All the variables whether ordinary or pointer are alike in that when declared in the program allocated locations in memory by compiler. These locations or their addresses can’t be known in advance. That’s why we access locations by names of variables. Although, all variables, declared and not initialized in the program, have garbage values stored in them. But type of values stored differ for ordinary and pointer variables. Ordinary variables hold values of their type while pointers always hold addresses.
+
+Observe the Output, below, when I run the above program on my Linux system:
+
+Values of Ordinary Variables:
+        character ch is          A,
+        integer ival is        100,
+        float fval is	   3.300000,
+        double dval is	   5.600000
+ 
+Values of Pointer Variables:
+        character pointer cp is 0x7fff76c973df, 
+        integer pointer ip is 0x7fff76c973d8, 
+        float pointer fp is  0x7fff76c973d4, 
+        double pointer dp is 0x7fff76c973c8, 
+        pointer to pointer dcp is 0x7fff76c973c0
+ 
+Garbage Values of Uninitialized:
+        integer "count" is          0     
+        pointer to int "ip1" is   0xf0b2ff
+
+Notice that pointer variable holds address; address of some variable or pointer variable while ordinary variables hold values of their respective types. 
