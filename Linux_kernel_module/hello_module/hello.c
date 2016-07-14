@@ -1,5 +1,8 @@
 /*
  * The "Hello, World" kernel module
+ * To build this module, place hello.c and Makefile in same directory and
+ * type make in console, it will generate the hello.ko file as loadable 
+ * kernel module, few other files will also be generated.
  */
 
 #include <linux/init.h>
