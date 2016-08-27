@@ -7,17 +7,18 @@
 
 #include <stdio.h>
 
-#define MAX_SIZE  6
+#define ROW_SIZE  6
+#define COL_SIZE  6
 
 int main (void)
 {
-	int arr [MAX_SIZE] [MAX_SIZE];
+	int arr [ROW_SIZE] [COL_SIZE];
 	int row, col;
 	int sum, maxsum;
 	
 	printf ("Enter elements of an array :\n");
-	for (row = 0; row < MAX_SIZE; row++) {
-		for (col = 0; col < MAX_SIZE; col++) {
+	for (row = 0; row < ROW_SIZE; row++) {
+		for (col = 0; col < COL_SIZE; col++) {
 			scanf ("%d", &arr [row] [col]);
 		}
 	}
