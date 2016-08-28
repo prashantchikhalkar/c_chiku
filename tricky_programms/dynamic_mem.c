@@ -1,7 +1,7 @@
 /**
  *
  *
- *
+ * malloc () and calloc () usage
  **/
 
 #include <stdio.h>
