@@ -15,7 +15,7 @@ struct node *current = NULL;
 //display the list
 void printList() {
    struct node *ptr = head;
-   printf"\n[ ");
+   printf("\n[ ");
 	
    //start from the beginning
    while(ptr != NULL) {
