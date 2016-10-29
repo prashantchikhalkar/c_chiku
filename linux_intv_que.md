@@ -11,3 +11,5 @@ How to debug if Serial connection to h/w is not working?
 
 Does pages are used in kernel space?
 
+What is implicit and explicit decleration ?
+
