@@ -13,3 +13,4 @@ Does pages are used in kernel space?
 
 What is implicit and explicit decleration ?
 
+What is bootloader? 
