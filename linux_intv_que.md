@@ -18,3 +18,5 @@ What is bootloader?
 How memory is allocated for a Device Driver ?
 
 How to change priority of a process in Linux ?
+
+What is DHCP ?
