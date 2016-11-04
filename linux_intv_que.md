@@ -22,3 +22,5 @@ How to change priority of a process in Linux ?
 What is DHCP ?
 
 What is nice value ?
+
+Explain Dynamic memory allocation in C ?
