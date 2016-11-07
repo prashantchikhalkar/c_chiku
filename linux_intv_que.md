@@ -28,3 +28,5 @@ Explain Dynamic memory allocation in C ?
 Is there any way to run kernel image without hardware ?
 
 What is QEMU ?
+
+What is proc filesystem in Linux ?
