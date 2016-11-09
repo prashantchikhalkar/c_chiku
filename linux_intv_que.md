@@ -32,3 +32,5 @@ What is QEMU ?
 What is proc filesystem in Linux ?
 
 What is the use of sysfs in Linux ?
+
+What is decleration and defination in C ?
