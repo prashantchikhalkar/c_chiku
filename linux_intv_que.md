@@ -34,3 +34,5 @@ What is proc filesystem in Linux ?
 What is the use of sysfs in Linux ?
 
 What is decleration and defination in C ?
+
+What is function pointer in C ?
