@@ -40,3 +40,5 @@ What is function pointer in C ?
 How to generate Assembly code with GCC ?
 
 Who does the optimization in GCC ?
+
+Explain Compilation procedure in GCC ?
