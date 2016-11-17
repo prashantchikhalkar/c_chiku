@@ -1,3 +1,11 @@
+/**
+ *  @file     size_of_var.c
+ *  @brief    C program to find size of variable with using "sizeof" operator
+ *
+ *
+ *
+ **/
+
 #include <stdio.h>
 
 #define SIZEOF(var)   ((char *)(&var + 1) - (char *) (&var))
