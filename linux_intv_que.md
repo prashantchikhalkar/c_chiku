@@ -44,3 +44,5 @@ Who does the optimization in GCC ?
 Explain Compilation procedure in GCC ?
 
 Write a C program to swap even bits with odd bit in 32 bit number.
+
+Which header file to be added for using malloc in C ?
