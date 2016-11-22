@@ -1,5 +1,5 @@
 /**
- *
+ *	@file		dynamic_mem.c
  *
  * malloc () and calloc () usage
  **/
