@@ -1,4 +1,4 @@
-** This file contains interview questions on Linux Kernel
+** This file contains interview questions on Linux Kernel and C programming
 
 
 What is slab allocator?
