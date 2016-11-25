@@ -3,6 +3,8 @@
 
 What is slab allocator?
 
+How Slab allocator in Linux Kernel works ?
+
 What is SMP?
 
 How to remove password from ssh promt in linux?
