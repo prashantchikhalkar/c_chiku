@@ -1,8 +1,7 @@
 /**
- *	@file	: hourglass_problem.c 
- *	@brief	: C program to solve hourglass problem.
- *
- *
+ *	@file		: hourglass_problem.c 
+ *	@brief		: C program to solve hourglass problem.
+ *	@description	:
  **/
 
 #include <stdio.h>
