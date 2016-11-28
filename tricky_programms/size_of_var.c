@@ -3,6 +3,7 @@
  *  @brief    C program to find size of variable with using "sizeof" operator
  *
  *
+ *  @todo     Can same logic be used for finding size of array ?
  *
  **/
 
