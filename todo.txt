@@ -6,4 +6,4 @@ Brush up Linux Kernel Internals
 Setup Linux Workstation, Ubuntu
 Finish LKD
 
-kernel compilation brush up
+kernel compilation brush up -- in progress
