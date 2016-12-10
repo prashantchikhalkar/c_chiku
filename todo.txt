@@ -4,6 +4,6 @@ Dig up WR Linux 4
 Setup vpn -- done
 Brush up Linux Kernel Internals
 Setup Linux Workstation, Ubuntu
-Finish LKD
+Finish LKD, Systemd 
 
 kernel compilation brush up -- in progress
